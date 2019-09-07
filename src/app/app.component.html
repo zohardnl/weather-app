@@ -1,21 +1,56 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="header">
+	<div class="header-item">
+		<img src="./images/logo.png" alt="herolo-logo" class="logo" />
+	</div>
+	<div class="header-item">
+		<div class="search">
+			<div>
+				<img src="./images/search.png" alt="searchIcon" />
+			</div>
+			<div>
+				<input type="text" placeholder="Search another city" />
+			</div>
+		</div>
+	</div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<div class="footer">
+	<div class="arrow">
+		<span>
+			<img src="./images/arrow right.svg" alt="arrow" />
+		</span>
+	</div>
+	<div class="main">
+		<div class="item">
+			<div>NEW YORK</div>
+			<div>today</div>
+			<div>23°</div>
+			<div>sunny</div>
+		</div>
+		<div class="item">
+			<div>monday</div>
+			<div>
+				<img src="./images/sunny.png" alt="sunny" />
+			</div>
+			<div>26°/19°</div>
+			<div>sunny</div>
+		</div>
+		<div class="item">
+			<div>tuesday</div>
+			<div>
+				<img src="./images/rain.png" alt="rain" />
+			</div>
+			<div>20°/12°</div>
+			<div>rain</div>
+		</div>
+		<div class="item">
+			<div>wednesday</div>
+			<div>
+				<img src="./images/cloudy.png" alt="cloudy" />
+			</div>
+			<div>14°/6°</div>
+			<div>cloudy</div>
+		</div>
+	</div>
+</div>
 <router-outlet></router-outlet>

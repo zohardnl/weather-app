@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./shared/vars";
+@import "./shared/mixins";
+
+@include google-font("Open+Sans");
+
+* {
+	outline: none !important;
+}
+
+html,
+body {
+	height: 100%;
+	font-family: $openSans;
+	overflow: hidden;
+}
+
+body {
+	@include mobile {
+		background: $background-mobile;
+		background-attachment: fixed;
+	}
+
+	background: $background-desktop;
+	background-attachment: fixed;
+}
+
+.coded {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	padding: 4px 0;
+	text-align: center;
+	z-index: 2;
+}

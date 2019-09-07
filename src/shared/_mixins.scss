@@ -1,0 +1,46 @@
+@mixin mobile {
+	@media (max-width: 767px) {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@media (min-width: 768px) and (max-width: 1024px) {
+		@content;
+	}
+}
+
+@mixin google-font($font) {
+	$font: unquote($font);
+	@import url("https://fonts.googleapis.com/css?family=#{$font}:300,400,500,600,700,800");
+}
+
+@mixin grid-vertical {
+	grid-template-columns: unset;
+	justify-content: center;
+	grid-gap: 5em;
+}
+
+@mixin arrow-down {
+	position: absolute;
+	margin: 0;
+	bottom: -5em;
+	justify-content: center;
+	width: 100%;
+
+	span {
+		transform: rotate(90deg);
+	}
+}
+
+@mixin arrow-desktop {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0 5vw 3vh 0;
+}
+
+@mixin grid-desktop {
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	justify-content: space-around;
+}
