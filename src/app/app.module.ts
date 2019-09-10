@@ -14,9 +14,9 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { NavbarComponent } from './navbar/navbar.component';
-import { WeatherInfoComponent } from './weather-info/weather-info.component';
-import { FavoritesComponent } from './favorites/favorites.component';
+import { NavbarComponent } from "./navbar/navbar.component";
+import { WeatherInfoComponent } from "./weather-info/weather-info.component";
+import { FavoritesComponent } from "./favorites/favorites.component";
 
 @NgModule({
 	declarations: [AppComponent, NavbarComponent, WeatherInfoComponent, FavoritesComponent],
