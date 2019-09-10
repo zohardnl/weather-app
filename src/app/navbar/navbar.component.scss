@@ -1,0 +1,69 @@
+@import "../../shared/mixins";
+@import "../../shared/vars";
+
+.weather-header {
+	@include mobile {
+		padding: 1em;
+		margin-bottom: 1em;
+	}
+
+	padding: 3em;
+	flex-wrap: wrap;
+
+	&__item {
+		&:first-child {
+			@include mobile {
+				margin: 0 auto 1em;
+			}
+
+			img {
+				width: 100%;
+			}
+
+			width: 10em;
+		}
+
+		&:nth-child(2) {
+			@include mobile {
+				width: 100% !important;
+			}
+			width: 25em;
+		}
+	}
+
+	&__search {
+		@include mobile {
+			width: 100% !important;
+
+			div:nth-child(2) {
+				padding-left: 2em;
+			}
+		}
+
+		background: #7aafd9;
+		padding: 1em;
+		border: 2px solid #5399e6;
+
+		mat-icon {
+			cursor: pointer;
+
+			&:active {
+				position: relative;
+				top: 1px;
+			}
+		}
+
+		input {
+			background: transparent;
+			border: none;
+			font-size: 1rem;
+			font-weight: bold;
+
+			&::placeholder {
+				color: #0d1e57;
+				font-size: 1rem;
+				font-weight: bold;
+			}
+		}
+	}
+}
