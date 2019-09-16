@@ -22,3 +22,15 @@ body {
 	background: $background-desktop;
 	font-family: "Roboto", sans-serif;
 }
+
+.spinner {
+	mat-spinner,
+	mat-spinner svg {
+		width: 50px !important;
+		height: 50px !important;
+
+		circle {
+			stroke: white;
+		}
+	}
+}

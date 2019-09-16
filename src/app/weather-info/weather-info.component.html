@@ -4,29 +4,31 @@
 	fxLayoutAlign="space-around center"
 	fxLayout.xs="column"
 	fxLayout.sm="column"
+	*ngIf="(weatherList | json) != '{}' && !api.isLoading"
 >
-	<div class="weather-info__item">
-		<span>NEW YORK</span>
-		<span>today</span>
-		<span>23°</span>
-		<span>sunny</span>
+	<div class="weather-info__item" *ngFor="let item of weatherList; let i = index">
+		<span *ngIf="i === 0">{{ getWeather().name | titlecase }}</span>
+		<span>{{ getWeather().day }}</span>
+		<span *ngIf="i !== 0"><img [src]="getWeather().image" alt="status-image"/></span>
+		<span>{{ getWeather().temp | number: "1.0-0" }}°</span>
+		<span>{{ getWeather().status }}</span>
 	</div>
-	<div class="weather-info__item">
-		<span>monday</span>
-		<span><img src="../../assets/images/sunny.png" alt=""/></span>
-		<span>26°/19°</span>
-		<span>sunny</span>
-	</div>
-	<div class="weather-info__item">
-		<span>tuesday</span>
-		<span><img src="../../assets/images/rain.png" alt=""/></span>
-		<span>20°/12°</span>
-		<span>rain</span>
-	</div>
-	<div class="weather-info__item">
-		<span>wednesday</span>
-		<span><img src="../../assets/images/cloudy.png" alt=""/></span>
-		<span>14°/6°</span>
-		<span>cloudy</span>
-	</div>
+	<!--	<div class="weather-info__item">-->
+	<!--		<span>monday</span>-->
+	<!--		<span><img src="../../assets/images/sunny.png" alt=""/></span>-->
+	<!--		<span>26/19°</span>-->
+	<!--		<span>sunny</span>-->
+	<!--	</div>-->
+	<!--	<div class="weather-info__item">-->
+	<!--		<span>tuesday</span>-->
+	<!--		<span><img src="../../assets/images/rain.png" alt=""/></span>-->
+	<!--		<span>20°/12°</span>-->
+	<!--		<span>rain</span>-->
+	<!--	</div>-->
+	<!--	<div class="weather-info__item">-->
+	<!--		<span>wednesday</span>-->
+	<!--		<span><img src="../../assets/images/cloudy.png" alt=""/></span>-->
+	<!--		<span>14°/6°</span>-->
+	<!--		<span>cloudy</span>-->
+	<!--	</div>-->
 </div>

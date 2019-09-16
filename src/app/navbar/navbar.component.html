@@ -3,9 +3,14 @@
 		<img src="../../assets/images/logo.png" alt="herolo-logo" class="weather-header__logo" />
 	</div>
 	<div class="weather-header__item">
-		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="space-around center">
-			<mat-icon>search</mat-icon>
-			<input type="text" placeholder="Search another city" />
+		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">
+			<input
+				type="search"
+				placeholder="Search city weather..."
+				ngModel
+				#search="ngModel"
+				pattern="^[\S][^\u0590-\u05FF]+$"
+			/>
 		</div>
 	</div>
 </div>
