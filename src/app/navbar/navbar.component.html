@@ -1,9 +1,10 @@
 <div class="weather-header" fxLayout="row" fxLayoutAlign="space-between center">
-	<div class="weather-header__item">
+	<div class="weather-header__item" routerLink="">
 		<img src="../../assets/images/logo.png" alt="herolo-logo" class="weather-header__logo" />
 	</div>
+
 	<div class="weather-header__item">
-		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">
+		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center" routerLink="">
 			<input
 				type="search"
 				placeholder="Search city weather..."
@@ -13,10 +14,11 @@
 			/>
 		</div>
 	</div>
-	<div>
+
+	<div class="weather-header__navigate">
 		<button mat-raised-button color="primary" routerLink="favorites" *ngIf="!isFavorite()">
-			Favorites Page
+			To Favorites
 		</button>
-		<button mat-raised-button color="primary" routerLink="" *ngIf="isFavorite()">Home Page</button>
+		<button mat-raised-button color="primary" routerLink="" *ngIf="isFavorite()">To Home</button>
 	</div>
 </div>

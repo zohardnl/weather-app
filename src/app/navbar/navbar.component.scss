@@ -12,6 +12,12 @@
 
 	&__item {
 		&:first-child {
+			transition: all 1s;
+
+			&:hover {
+				transform: scale(1.2);
+			}
+
 			@include mobile {
 				margin: 0 auto 1em;
 			}
@@ -22,6 +28,7 @@
 
 			width: 10em;
 			margin-top: 2em;
+			cursor: pointer;
 		}
 
 		&:nth-child(2) {
@@ -49,6 +56,12 @@
 				font-size: 1rem;
 				font-weight: bold;
 			}
+		}
+	}
+
+	&__navigate {
+		button {
+			min-width: 10em;
 		}
 	}
 }

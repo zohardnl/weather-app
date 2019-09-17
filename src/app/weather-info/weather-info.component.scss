@@ -4,22 +4,8 @@
 .weather-info {
 	flex-wrap: wrap;
 	color: $main-color;
-	position: relative;
-	bottom: 1em;
 
 	&__item {
-		@include mobile {
-			&:not(:last-child) {
-				margin-bottom: 1em;
-			}
-		}
-
-		@include tablet {
-			&:not(:last-child) {
-				margin-bottom: 1em;
-			}
-		}
-
 		background: rgba(255, 255, 255, 0.1);
 		width: 15em;
 		height: 18em;
@@ -28,8 +14,22 @@
 		align-items: center;
 		flex-direction: column;
 		margin-bottom: 1em;
+		border-radius: 1em;
+		transition: all 0.5s;
 
 		&:not(:first-child) {
+			&:hover {
+				@include tablet {
+					transform: scale(1.1);
+				}
+
+				@include mobile {
+					transform: scale(1.1);
+				}
+
+				transform: translateY(-20px);
+			}
+
 			span:nth-child(2) {
 				width: 5em;
 				height: 5em;
@@ -74,12 +74,6 @@
 			span:nth-child(4) {
 				font-size: 1em;
 			}
-		}
-
-		&:hover {
-			position: relative;
-			top: -20px;
-			transition: all 2s;
 		}
 	}
 }

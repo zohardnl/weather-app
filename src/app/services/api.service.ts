@@ -14,7 +14,6 @@ import * as moment from "moment";
 })
 export class ApiService {
 	filterdWeather: any[] = [];
-	weather;
 	isLoading: boolean = false;
 	cityName: string;
 
@@ -33,13 +32,11 @@ export class ApiService {
 	sendWeatherRequest(value: string): Observable<any> {
 		return this.sendWeatherHttpRequest(value).pipe(
 			map(result => {
-				// if (result.list.length >= 1) {
 				this.filterdWeather = result.list.filter(date => {
 					let dt = moment(date.dt_txt).format("LT");
 					return dt === "12:00 AM";
 				});
 				this.store.dispatch(new SearchWeatherActions.SearchWeather(this.filterdWeather));
-				// }
 			}),
 			catchError(err =>
 				of(
@@ -50,12 +47,10 @@ export class ApiService {
 		);
 	}
 
-	// clearWeather() {}
-
 	openModal(message: string, action: string) {
 		this.modal.openModal.open(message, action, {
 			duration: 3000,
-			verticalPosition: "top"
+			verticalPosition: "bottom"
 		});
 	}
 }
