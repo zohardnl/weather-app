@@ -2,6 +2,9 @@ import { AfterContentInit, Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { ApiService } from "../services/api.service";
 import * as moment from "moment";
+import { Store } from "@ngrx/store";
+import * as fromWeather from "./store/weather.reducer";
+import { environment } from "../../environments/environment";
 
 @Component({
 	selector: "app-weather-info",
@@ -9,34 +12,22 @@ import * as moment from "moment";
 	styleUrls: ["./weather-info.component.scss"]
 })
 export class WeatherInfoComponent implements OnInit, AfterContentInit {
-	weather$: Observable<any[]> = this.api.weatherList$;
-	weatherList: any[] = [];
-	weatherDay: string;
-	weather: object = {};
+	list$: Observable<{ weatherList: any[] }>;
 
-	constructor(private api: ApiService) {}
+	constructor(private api: ApiService, private store: Store<fromWeather.AppState>) {}
 
-	ngOnInit() {}
-
-	ngAfterContentInit(): void {
-		this.weather$.subscribe(list => {
-			console.log(list.slice(0, 4));
-			this.weatherList = list.slice(0, 4);
-		});
+	ngOnInit() {
+		this.list$ = this.store.select("weather");
+		//this.list$.subscribe(value => console.log(value.weatherList));
 	}
 
-	getWeather(): object {
-		this.weatherDay = this.weatherList[0].dt_txt;
-		this.weatherDay = moment(`${this.weatherDay}`).format("dddd");
+	ngAfterContentInit(): void {}
 
-		this.weather = {
-			day: this.weatherDay,
-			temp: this.weatherList[0].main.temp,
-			image: `http://openweathermap.org/img/wn/${this.weatherList[0].weather[0].icon}@2x.png`,
-			name: this.api.cityName,
-			status: this.weatherList[0].weather[0].description
-		};
+	getDay(day: string) {
+		return moment(day).format("dddd");
+	}
 
-		return this.weather;
+	getImage(img: string) {
+		return `${environment.apiImage}${img}@2x.png`;
 	}
 }

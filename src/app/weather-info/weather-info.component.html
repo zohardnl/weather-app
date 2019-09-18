@@ -6,29 +6,12 @@
 	fxLayout.sm="column"
 	*ngIf="(weatherList | json) != '{}' && !api.isLoading"
 >
-	<div class="weather-info__item" *ngFor="let item of weatherList; let i = index">
-		<span *ngIf="i === 0">{{ getWeather().name | titlecase }}</span>
-		<span>{{ getWeather().day }}</span>
-		<span *ngIf="i !== 0"><img [src]="getWeather().image" alt="status-image"/></span>
-		<span>{{ getWeather().temp | number: "1.0-0" }}°</span>
-		<span>{{ getWeather().status }}</span>
+	<div class="weather-info__item" *ngFor="let arr of (list$ | async).weatherList; let i = index">
+		<span *ngIf="i === 0">{{ api.cityName | titlecase }}</span>
+		<span *ngIf="i === 0">Today</span>
+		<span *ngIf="i !== 0">{{ getDay(arr.dt_txt) }}</span>
+		<span *ngIf="i !== 0"><img [src]="getImage(arr.weather[0].icon)" alt="status-image"/></span>
+		<span>{{ arr.main.temp | number: "1.0-0" }}°</span>
+		<span>{{ arr.weather[0].description }}</span>
 	</div>
-	<!--	<div class="weather-info__item">-->
-	<!--		<span>monday</span>-->
-	<!--		<span><img src="../../assets/images/sunny.png" alt=""/></span>-->
-	<!--		<span>26/19°</span>-->
-	<!--		<span>sunny</span>-->
-	<!--	</div>-->
-	<!--	<div class="weather-info__item">-->
-	<!--		<span>tuesday</span>-->
-	<!--		<span><img src="../../assets/images/rain.png" alt=""/></span>-->
-	<!--		<span>20°/12°</span>-->
-	<!--		<span>rain</span>-->
-	<!--	</div>-->
-	<!--	<div class="weather-info__item">-->
-	<!--		<span>wednesday</span>-->
-	<!--		<span><img src="../../assets/images/cloudy.png" alt=""/></span>-->
-	<!--		<span>14°/6°</span>-->
-	<!--		<span>cloudy</span>-->
-	<!--	</div>-->
 </div>

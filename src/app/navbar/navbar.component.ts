@@ -2,6 +2,10 @@ import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { debounceTime, filter, switchMap, tap } from "rxjs/operators";
 import { ApiService } from "../services/api.service";
+import { Store } from "@ngrx/store";
+import * as fromWeather from "../weather-info/store/weather.reducer";
+import * as SearchWeatherActions from "../weather-info/store/weather.actions";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-navbar",
@@ -11,7 +15,11 @@ import { ApiService } from "../services/api.service";
 export class NavbarComponent implements OnInit, AfterViewInit {
 	@ViewChild("search", { static: false }) weatherSearch: FormControl;
 
-	constructor(private api: ApiService) {}
+	constructor(
+		private api: ApiService,
+		private store: Store<fromWeather.AppState>,
+		private route: Router
+	) {}
 
 	ngOnInit() {}
 
@@ -19,7 +27,23 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 		this.searchListener();
 	}
 
+	isFavorite() {
+		return this.route.url === "/favorites";
+	}
+
 	searchListener(): void {
+		// empty query stream handler, reset the weather when the query is empty.
+		this.weatherSearch.valueChanges
+			.pipe(
+				filter(value => value.length === 0 || this.weatherSearch.invalid),
+				tap(() => {
+					this.store.dispatch(new SearchWeatherActions.CleanWeather([]));
+					this.api.isLoading = false;
+				})
+			)
+			.subscribe();
+
+		// search weather stream handler;
 		this.weatherSearch.valueChanges
 			.pipe(
 				filter(value => value && value.length >= 2 && this.weatherSearch.valid),

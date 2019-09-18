@@ -7,7 +7,7 @@
 		margin-bottom: 1em;
 	}
 
-	padding: 3em;
+	padding: 1em 3em;
 	flex-wrap: wrap;
 
 	&__item {
@@ -21,6 +21,7 @@
 			}
 
 			width: 10em;
+			margin-top: 2em;
 		}
 
 		&:nth-child(2) {

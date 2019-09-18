@@ -17,6 +17,9 @@ import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./navbar/navbar.component";
 import { WeatherInfoComponent } from "./weather-info/weather-info.component";
 import { FavoritesComponent } from "./favorites/favorites.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { StoreModule } from "@ngrx/store";
+import { weatherReducer } from "./weather-info/store/weather.reducer";
 
 @NgModule({
 	declarations: [AppComponent, NavbarComponent, WeatherInfoComponent, FavoritesComponent],
@@ -34,7 +37,9 @@ import { FavoritesComponent } from "./favorites/favorites.component";
 		FormsModule,
 		ReactiveFormsModule,
 		MatDialogModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		BrowserAnimationsModule,
+		StoreModule.forRoot({ weather: weatherReducer })
 	],
 	entryComponents: [],
 	providers: [],
