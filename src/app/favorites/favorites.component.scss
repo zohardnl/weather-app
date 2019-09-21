@@ -1,0 +1,52 @@
+@import "../../shared/mixins";
+@import "../../shared/vars";
+
+.favorite-info {
+	flex-wrap: wrap;
+	color: $main-color;
+	padding: 0 1em;
+
+	&__item {
+		background: rgba(255, 255, 255, 0.1);
+		width: 15em;
+		height: 18em;
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		flex-direction: column;
+		margin-bottom: 1em;
+		border-radius: 1em;
+		transition: all 0.5s;
+
+		span:first-child {
+			font-family: fantasy;
+			font-size: large;
+		}
+
+		span:nth-child(2) {
+			width: 5em;
+			height: 5em;
+			margin: 0 auto;
+			display: flex;
+			align-items: center;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		span:nth-child(3) {
+			font-size: 3em;
+			font-family: cursive;
+		}
+
+		span:nth-child(4) {
+			font-size: 1em;
+			font-style: italic;
+		}
+	}
+
+	&__title {
+		font-weight: lighter;
+	}
+}

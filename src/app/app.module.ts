@@ -20,6 +20,7 @@ import { FavoritesComponent } from "./favorites/favorites.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { StoreModule } from "@ngrx/store";
 import { weatherReducer } from "./weather-info/store/weather.reducer";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 @NgModule({
 	declarations: [AppComponent, NavbarComponent, WeatherInfoComponent, FavoritesComponent],
@@ -39,7 +40,11 @@ import { weatherReducer } from "./weather-info/store/weather.reducer";
 		MatDialogModule,
 		MatProgressSpinnerModule,
 		BrowserAnimationsModule,
-		StoreModule.forRoot({ weather: weatherReducer })
+		StoreModule.forRoot({ weather: weatherReducer }),
+		StoreDevtoolsModule.instrument({
+			maxAge: 25 // Retains last 25 states
+			//logOnly: environment.production // Restrict extension to log-only mode
+		})
 	],
 	entryComponents: [],
 	providers: [],

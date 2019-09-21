@@ -4,14 +4,17 @@
 	fxLayoutAlign="space-around center"
 	fxLayout.xs="column"
 	fxLayout.sm="column"
-	*ngIf="(weatherList | json) != '{}' && !api.isLoading"
+	*ngIf="weatherList.length > 0 && !api.isLoading"
 >
-	<div class="weather-info__item" *ngFor="let arr of (list$ | async).weatherList; let i = index">
+	<div class="weather-info__item" *ngFor="let item of weatherList; let i = index">
 		<span *ngIf="i === 0">{{ api.cityName | titlecase }}</span>
 		<span *ngIf="i === 0">Today</span>
-		<span *ngIf="i !== 0">{{ getDay(arr.dt_txt) }}</span>
-		<span *ngIf="i !== 0"><img [src]="getImage(arr.weather[0].icon)" alt="status-image"/></span>
-		<span>{{ arr.main.temp | number: "1.0-0" }}°</span>
-		<span>{{ arr.weather[0].description }}</span>
+		<span *ngIf="i !== 0">{{ getDay(item.dt_txt) }}</span>
+		<span *ngIf="i !== 0"><img [src]="getImage(item.weather[0].icon)" alt="status-image"/></span>
+		<span>{{ item.main.temp | number: "1.0-0" }}°</span>
+		<span>{{ item.weather[0].description }}</span>
+		<button (click)="addToFavorite(item)" *ngIf="i === 0" routerLink="favorites" mat-raised-button>
+			Save
+		</button>
 	</div>
 </div>

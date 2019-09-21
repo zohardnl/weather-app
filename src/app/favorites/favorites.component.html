@@ -1,0 +1,23 @@
+<div
+	class="favorite-info animated bounceInLeft slow"
+	fxLayout="row"
+	fxLayoutAlign="space-around center"
+	fxLayout.xs="column"
+	fxLayout.sm="column"
+	*ngIf="favoriteList.length > 0"
+>
+	<div
+		*ngFor="let item of favoriteList; let i = index"
+		fxLayout="column"
+		fxLayoutAlign="center center"
+	>
+		<h1 class="favorite-info__title">{{ api.cities[i] | titlecase }}</h1>
+
+		<div class="favorite-info__item">
+			<span>Today</span>
+			<span><img [src]="getImage(item.weather[0].icon)" alt="status-image"/></span>
+			<span>{{ item.main.temp | number: "1.0-0" }}°</span>
+			<span>{{ item.weather[0].description }}</span>
+		</div>
+	</div>
+</div>

@@ -4,7 +4,7 @@
 	</div>
 
 	<div class="weather-header__item">
-		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center" routerLink="">
+		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">
 			<input
 				type="search"
 				placeholder="Search city weather..."
@@ -15,7 +15,7 @@
 		</div>
 	</div>
 
-	<div class="weather-header__navigate">
+	<div class="weather-header__navigate" fxLayoutAlign="center center">
 		<button mat-raised-button color="primary" routerLink="favorites" *ngIf="!isFavorite()">
 			To Favorites
 		</button>

@@ -4,7 +4,7 @@ import { debounceTime, filter, switchMap, tap } from "rxjs/operators";
 import { ApiService } from "../services/api.service";
 import { Store } from "@ngrx/store";
 import * as fromWeather from "../weather-info/store/weather.reducer";
-import * as SearchWeatherActions from "../weather-info/store/weather.actions";
+import * as WeatherActions from "../weather-info/store/weather.actions";
 import { Router } from "@angular/router";
 
 @Component({
@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 			.pipe(
 				filter(value => value.length === 0 || this.weatherSearch.invalid),
 				tap(() => {
-					this.store.dispatch(new SearchWeatherActions.CleanWeather([]));
+					this.store.dispatch(new WeatherActions.ClearWeather([]));
 					this.api.isLoading = false;
 				})
 			)
@@ -49,11 +49,15 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 				filter(value => value && value.length >= 2 && this.weatherSearch.valid),
 				tap(() => {
 					this.api.isLoading = true;
-					this.api.cityName = this.weatherSearch.value;
 				}),
 				debounceTime(3000),
 				switchMap(value => this.api.sendWeatherRequest(value))
 			)
-			.subscribe(() => (this.api.isLoading = false));
+			.subscribe(() => {
+				this.api.isLoading = false;
+				this.api.cityName = this.weatherSearch.value;
+				this.api.cities.push(this.api.cityName);
+				this.route.navigate([""]);
+			});
 	}
 }

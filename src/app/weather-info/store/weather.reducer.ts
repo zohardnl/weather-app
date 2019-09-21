@@ -5,11 +5,13 @@ export interface AppState {
 }
 
 export interface State {
-	weatherList: [];
+	weatherList: any[];
+	favoriteList: any[];
 }
 
 const initialState: State = {
-	weatherList: []
+	weatherList: [],
+	favoriteList: []
 };
 
 export function weatherReducer(
@@ -20,13 +22,19 @@ export function weatherReducer(
 		case SearchWeatherActions.SEARCH_WEATHER:
 			return {
 				...state,
-				weatherList: [...action.payload]
+				weatherList: [...state.weatherList, ...action.payload]
 			};
 
 		case SearchWeatherActions.CLEAR_WEATHER:
 			return {
 				...state,
 				weatherList: [...action.payload]
+			};
+
+		case SearchWeatherActions.ADD_FAVORITE:
+			return {
+				...state,
+				favoriteList: [...state.favoriteList, action.payload]
 			};
 
 		default:

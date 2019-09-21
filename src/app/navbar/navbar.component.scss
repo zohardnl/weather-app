@@ -33,16 +33,22 @@
 
 		&:nth-child(2) {
 			@include mobile {
-				width: 100% !important;
+				width: 100%;
+				margin-bottom: 2em;
 			}
 			width: 25em;
 		}
 	}
 
 	&__search {
+		@include mobile {
+			padding: 0.7em;
+		}
+
 		background: #7aafd9;
 		padding: 1em;
 		border: 2px solid #5399e6;
+		border-radius: 2em;
 
 		input {
 			background: transparent;
@@ -60,6 +66,14 @@
 	}
 
 	&__navigate {
+		@include tablet {
+			width: 100%;
+		}
+
+		@include mobile {
+			width: 100%;
+		}
+
 		button {
 			min-width: 10em;
 		}

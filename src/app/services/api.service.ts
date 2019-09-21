@@ -4,7 +4,7 @@ import { catchError, map } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { ModalService } from "./modal.service";
 import { Store } from "@ngrx/store";
-import * as SearchWeatherActions from "../weather-info/store/weather.actions";
+import * as WeatherActions from "../weather-info/store/weather.actions";
 import * as fromWeather from "../weather-info/store/weather.reducer";
 import { environment } from "../../environments/environment";
 import * as moment from "moment";
@@ -15,7 +15,8 @@ import * as moment from "moment";
 export class ApiService {
 	filterdWeather: any[] = [];
 	isLoading: boolean = false;
-	cityName: string;
+	cities: string[] = [];
+	cityName: string = "";
 
 	constructor(
 		private http: HttpClient,
@@ -32,16 +33,17 @@ export class ApiService {
 	sendWeatherRequest(value: string): Observable<any> {
 		return this.sendWeatherHttpRequest(value).pipe(
 			map(result => {
-				this.filterdWeather = result.list.filter(date => {
+				this.filterdWeather = result.list.filter((date, index) => {
 					let dt = moment(date.dt_txt).format("LT");
-					return dt === "12:00 AM";
+					if (index !== 0) return dt === "12:00 AM";
+					else return date;
 				});
-				this.store.dispatch(new SearchWeatherActions.SearchWeather(this.filterdWeather));
+				this.store.dispatch(new WeatherActions.SearchWeather(this.filterdWeather));
 			}),
 			catchError(err =>
 				of(
 					this.openModal(`${err.error.message}`, "Search"),
-					this.store.dispatch(new SearchWeatherActions.CleanWeather([]))
+					this.store.dispatch(new WeatherActions.ClearWeather([]))
 				)
 			)
 		);

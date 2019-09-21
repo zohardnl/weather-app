@@ -1,27 +1,26 @@
-import { AfterContentInit, Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import * as moment from "moment";
 import { Store } from "@ngrx/store";
 import * as fromWeather from "./store/weather.reducer";
 import { environment } from "../../environments/environment";
+import * as WeatherActions from "../weather-info/store/weather.actions";
 
 @Component({
 	selector: "app-weather-info",
 	templateUrl: "./weather-info.component.html",
 	styleUrls: ["./weather-info.component.scss"]
 })
-export class WeatherInfoComponent implements OnInit, AfterContentInit {
-	list$: Observable<{ weatherList: any[] }>;
+export class WeatherInfoComponent implements OnInit {
+	weatherList: any[] = [];
 
 	constructor(private api: ApiService, private store: Store<fromWeather.AppState>) {}
 
 	ngOnInit() {
-		this.list$ = this.store.select("weather");
-		//this.list$.subscribe(value => console.log(value.weatherList));
+		this.store.select("weather").subscribe(arr => {
+			this.weatherList = arr.weatherList;
+		});
 	}
-
-	ngAfterContentInit(): void {}
 
 	getDay(day: string) {
 		return moment(day).format("dddd");
@@ -29,5 +28,9 @@ export class WeatherInfoComponent implements OnInit, AfterContentInit {
 
 	getImage(img: string) {
 		return `${environment.apiImage}${img}@2x.png`;
+	}
+
+	addToFavorite(item: any) {
+		this.store.dispatch(new WeatherActions.AddFavorite(item));
 	}
 }
