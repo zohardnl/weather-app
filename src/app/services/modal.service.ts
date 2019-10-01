@@ -5,5 +5,12 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 	providedIn: "root"
 })
 export class ModalService {
-	constructor(public openModal: MatSnackBar) {}
+	constructor(public modalSnack: MatSnackBar) {}
+
+	openModal(message: string, action?: string) {
+		this.modalSnack.open(message, action, {
+			duration: 3000,
+			verticalPosition: "bottom"
+		});
+	}
 }

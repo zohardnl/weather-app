@@ -4,7 +4,7 @@
 	fxLayoutAlign="space-around center"
 	fxLayout.xs="column"
 	fxLayout.sm="column"
-	*ngIf="favoriteList.length > 0"
+	*ngIf="favoriteList && favoriteList.length > 0"
 >
 	<div
 		*ngFor="let item of favoriteList; let i = index"

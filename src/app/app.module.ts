@@ -18,12 +18,18 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { WeatherInfoComponent } from "./weather-info/weather-info.component";
 import { FavoritesComponent } from "./favorites/favorites.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { StoreModule } from "@ngrx/store";
-import { weatherReducer } from "./weather-info/store/weather.reducer";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { AkitaNgDevtools } from "@datorama/akita-ngdevtools";
+import { NG_ENTITY_SERVICE_CONFIG } from "@datorama/akita-ng-entity-service";
+import { AddonComponent } from "./addon/addon.component";
 
 @NgModule({
-	declarations: [AppComponent, NavbarComponent, WeatherInfoComponent, FavoritesComponent],
+	declarations: [
+		AppComponent,
+		NavbarComponent,
+		WeatherInfoComponent,
+		FavoritesComponent,
+		AddonComponent
+	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
@@ -40,14 +46,17 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 		MatDialogModule,
 		MatProgressSpinnerModule,
 		BrowserAnimationsModule,
-		StoreModule.forRoot({ weather: weatherReducer }),
-		StoreDevtoolsModule.instrument({
-			maxAge: 25 // Retains last 25 states
-			//logOnly: environment.production // Restrict extension to log-only mode
-		})
+		AkitaNgDevtools.forRoot({ maxAge: 25 })
 	],
 	entryComponents: [],
-	providers: [],
+	providers: [
+		{
+			provide: NG_ENTITY_SERVICE_CONFIG,
+			useValue: {
+				baseUrl: "https://jsonplaceholder.typicode.com"
+			}
+		}
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -2,10 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { debounceTime, filter, switchMap, tap } from "rxjs/operators";
 import { ApiService } from "../services/api.service";
-import { Store } from "@ngrx/store";
-import * as fromWeather from "../weather-info/store/weather.reducer";
-import * as WeatherActions from "../weather-info/store/weather.actions";
 import { Router } from "@angular/router";
+import { WeatherService } from "../state";
 
 @Component({
 	selector: "app-navbar",
@@ -15,11 +13,7 @@ import { Router } from "@angular/router";
 export class NavbarComponent implements OnInit, AfterViewInit {
 	@ViewChild("search", { static: false }) weatherSearch: FormControl;
 
-	constructor(
-		private api: ApiService,
-		private store: Store<fromWeather.AppState>,
-		private route: Router
-	) {}
+	constructor(private api: ApiService, private route: Router, private weather: WeatherService) {}
 
 	ngOnInit() {}
 
@@ -32,12 +26,12 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 	}
 
 	searchListener(): void {
-		// empty query stream handler, reset the weather when the query is empty.
+		// empty query stream handler, reset the weather when the query is empty or invalid.
 		this.weatherSearch.valueChanges
 			.pipe(
 				filter(value => value.length === 0 || this.weatherSearch.invalid),
 				tap(() => {
-					this.store.dispatch(new WeatherActions.ClearWeather([]));
+					this.weather.updateWeather([]);
 					this.api.isLoading = false;
 				})
 			)
@@ -49,15 +43,14 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 				filter(value => value && value.length >= 2 && this.weatherSearch.valid),
 				tap(() => {
 					this.api.isLoading = true;
+					this.api.cityName = this.weatherSearch.value;
 				}),
 				debounceTime(3000),
 				switchMap(value => this.api.sendWeatherRequest(value))
 			)
 			.subscribe(() => {
 				this.api.isLoading = false;
-				this.api.cityName = this.weatherSearch.value;
-				this.api.cities.push(this.api.cityName);
-				this.route.navigate([""]);
+				if (this.route.url === "/favorites") this.route.navigate([""]);
 			});
 	}
 }

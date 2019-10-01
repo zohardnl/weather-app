@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import * as fromWeather from "../weather-info/store/weather.reducer";
 import { environment } from "../../environments/environment";
 import { ApiService } from "../services/api.service";
+import { WeatherService } from "../state";
 
 @Component({
 	selector: "app-favorites",
@@ -12,11 +11,11 @@ import { ApiService } from "../services/api.service";
 export class FavoritesComponent implements OnInit {
 	favoriteList: any[] = [];
 
-	constructor(private store: Store<fromWeather.AppState>, private api: ApiService) {}
+	constructor(private api: ApiService, private weather: WeatherService) {}
 
 	ngOnInit() {
-		this.store.select("weather").subscribe(arr => {
-			this.favoriteList = arr.favoriteList;
+		this.weather.getfavoriteList().subscribe(list => {
+			this.favoriteList = list;
 		});
 	}
 

@@ -3,11 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { ModalService } from "./modal.service";
-import { Store } from "@ngrx/store";
-import * as WeatherActions from "../weather-info/store/weather.actions";
-import * as fromWeather from "../weather-info/store/weather.reducer";
 import { environment } from "../../environments/environment";
 import * as moment from "moment";
+import { WeatherService } from "../state";
 
 @Injectable({
 	providedIn: "root"
@@ -21,11 +19,11 @@ export class ApiService {
 	constructor(
 		private http: HttpClient,
 		private modal: ModalService,
-		private store: Store<fromWeather.AppState>
+		private weather: WeatherService
 	) {}
 
 	sendWeatherHttpRequest(value: string): Observable<any> {
-		return this.http.get<any[]>(
+		return this.http.get<any>(
 			`${environment.apiUrl}=${value}&units=metric&APPID=${environment.apiKey}`
 		);
 	}
@@ -33,26 +31,19 @@ export class ApiService {
 	sendWeatherRequest(value: string): Observable<any> {
 		return this.sendWeatherHttpRequest(value).pipe(
 			map(result => {
-				this.filterdWeather = result.list.filter((date, index) => {
-					let dt = moment(date.dt_txt).format("LT");
-					if (index !== 0) return dt === "12:00 AM";
-					else return date;
-				});
-				this.store.dispatch(new WeatherActions.SearchWeather(this.filterdWeather));
+				if (result.list.length > 0) {
+					this.filterdWeather = result.list.filter((date, index) => {
+						let dt = moment(date.dt_txt).format("LT");
+						if (index !== 0) return dt === "12:00 AM";
+						else return date;
+					});
+					this.weather.updateWeather(this.filterdWeather);
+					this.cities.push(this.cityName);
+				}
 			}),
 			catchError(err =>
-				of(
-					this.openModal(`${err.error.message}`, "Search"),
-					this.store.dispatch(new WeatherActions.ClearWeather([]))
-				)
+				of(this.modal.openModal(`${err.error.message}`, "Search"), this.weather.updateWeather([]))
 			)
 		);
-	}
-
-	openModal(message: string, action: string) {
-		this.modal.openModal.open(message, action, {
-			duration: 3000,
-			verticalPosition: "bottom"
-		});
 	}
 }

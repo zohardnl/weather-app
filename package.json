@@ -10,6 +10,10 @@
 		"e2e": "ng e2e"
 	},
 	"private": true,
+	"akitaCli": {
+		"customFolderName": "true",
+		"template": "angular"
+	},
 	"dependencies": {
 		"@angular/animations": "^9.0.0-next.6",
 		"@angular/cdk": "^8.2.0",
@@ -22,6 +26,8 @@
 		"@angular/platform-browser": "~9.0.0-next.6",
 		"@angular/platform-browser-dynamic": "~9.0.0-next.6",
 		"@angular/router": "~9.0.0-next.6",
+		"@datorama/akita": "^4.10.5",
+		"@datorama/akita-ng-entity-service": "^1.0.3",
 		"@ngrx/store": "^8.3.0",
 		"@ngrx/store-devtools": "^8.3.0",
 		"animate.css": "^3.7.2",
@@ -37,9 +43,10 @@
 		"@angular/cli": "~8.3.4",
 		"@angular/compiler-cli": "~9.0.0-next.6",
 		"@angular/language-service": "~9.0.0-next.6",
-		"@types/node": "~8.9.4",
+		"@datorama/akita-ngdevtools": "^3.0.2",
 		"@types/jasmine": "~3.3.8",
 		"@types/jasminewd2": "~2.0.3",
+		"@types/node": "~8.9.4",
 		"codelyzer": "^5.0.0",
 		"jasmine-core": "~3.4.0",
 		"jasmine-spec-reporter": "~4.2.1",
