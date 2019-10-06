@@ -5,18 +5,15 @@
 	flex-wrap: wrap;
 	color: $main-color;
 	padding: 0 1em;
+	width: 100%;
 
 	&__item {
-		background: rgba(255, 255, 255, 0.1);
+		cursor: pointer;
 		width: 15em;
 		height: 18em;
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-		flex-direction: column;
-		margin-bottom: 1em;
-		border-radius: 1em;
+		margin-bottom: 2em;
 		transition: all 0.5s;
+		perspective: 1000px;
 
 		span:first-child {
 			font-family: fantasy;
@@ -44,9 +41,71 @@
 			font-size: 1em;
 			font-style: italic;
 		}
+
+		&__city {
+			height: auto;
+			width: auto;
+			font-size: 40px;
+			border: 1px solid;
+			padding: 10px;
+			border-radius: 3em;
+		}
+
+		&:hover {
+			.flip-card-inner {
+				transform: rotateY(180deg);
+			}
+		}
+
+		.flip-card-inner {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			transition: transform 0.6s;
+			transform-style: preserve-3d;
+			border-radius: 1em;
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.front-info,
+		.back-info {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			backface-visibility: hidden;
+			border-radius: 1em;
+			background: no-repeat center;
+			background-size: cover;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		.back-info {
+			background: rgba(255, 255, 255, 0.1);
+			transform: rotateY(180deg);
+			z-index: 1;
+		}
 	}
 
-	&__title {
-		font-weight: lighter;
+	&__main-title {
+		color: $main-color;
+		font-family: cursive;
+		border: 2px dashed;
+		padding: 20px;
+		margin: 1em 0;
+		text-align: center;
+	}
+
+	&__subtitle {
+		font-size: 50px;
+		font-weight: bold;
+		font-family: fantasy;
+		margin: 0;
+	}
+
+	&__wrapper {
+		height: 100%;
 	}
 }

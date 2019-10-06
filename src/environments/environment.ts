@@ -4,9 +4,9 @@
 
 export const environment = {
 	production: false,
-	apiUrl: "http://api.openweathermap.org/data/2.5/forecast?q",
+	apiUrl: "https://api.openweathermap.org/data/2.5/forecast?q",
 	apiKey: "e7680cb86def334be135f12d742a5ce4",
-	apiImage: "http://openweathermap.org/img/wn/"
+	apiImage: "https://openweathermap.org/img/wn/"
 };
 
 /*

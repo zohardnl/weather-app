@@ -5,16 +5,14 @@ import { Observable, of } from "rxjs";
 import { ModalService } from "./modal.service";
 import { environment } from "../../environments/environment";
 import * as moment from "moment";
-import { WeatherService } from "../state";
+import { Weather, WeatherService } from "../state";
 
 @Injectable({
 	providedIn: "root"
 })
 export class ApiService {
-	filterdWeather: any[] = [];
+	filterdWeather: Weather[] = [];
 	isLoading: boolean = false;
-	cities: string[] = [];
-	cityName: string = "";
 
 	constructor(
 		private http: HttpClient,
@@ -32,13 +30,22 @@ export class ApiService {
 		return this.sendWeatherHttpRequest(value).pipe(
 			map(result => {
 				if (result.list.length > 0) {
-					this.filterdWeather = result.list.filter((date, index) => {
-						let dt = moment(date.dt_txt).format("LT");
+					this.filterdWeather = result.list.map(date => {
+						return {
+							name: result.city.name,
+							day: date.dt_txt,
+							image: date.weather[0].icon,
+							temp: date.main.temp,
+							status: date.weather[0].description
+						} as Weather;
+					});
+
+					this.filterdWeather = this.filterdWeather.filter((date, index) => {
+						let dt = moment(date.day).format("LT");
 						if (index !== 0) return dt === "12:00 AM";
 						else return date;
 					});
 					this.weather.updateWeather(this.filterdWeather);
-					this.cities.push(this.cityName);
 				}
 			}),
 			catchError(err =>

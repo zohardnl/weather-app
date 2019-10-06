@@ -1,6 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { debounceTime, filter, switchMap, tap } from "rxjs/operators";
+import {
+	debounceTime,
+	distinctUntilChanged,
+	distinctUntilKeyChanged,
+	filter,
+	switchMap,
+	tap
+} from "rxjs/operators";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
 import { WeatherService } from "../state";
@@ -43,9 +50,9 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 				filter(value => value && value.length >= 2 && this.weatherSearch.valid),
 				tap(() => {
 					this.api.isLoading = true;
-					this.api.cityName = this.weatherSearch.value;
 				}),
 				debounceTime(3000),
+				distinctUntilChanged(),
 				switchMap(value => this.api.sendWeatherRequest(value))
 			)
 			.subscribe(() => {

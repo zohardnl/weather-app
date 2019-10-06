@@ -25,6 +25,11 @@ body {
 }
 
 .spinner {
+	@include tablet {
+		padding: 3em 0;
+	}
+
+	padding: 1em 0;
 	mat-spinner,
 	mat-spinner svg {
 		width: 50px !important;
@@ -34,4 +39,8 @@ body {
 			stroke: white;
 		}
 	}
+}
+
+app-favorites {
+	height: 100%;
 }

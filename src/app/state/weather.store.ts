@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { EntityState, EntityStore, StoreConfig } from "@datorama/akita";
+import { Weather } from "./weather.model";
 
-export interface WeatherState extends EntityState<any> {
-	weatherList: any[];
-	favoriteList: any[];
+export interface WeatherState extends EntityState<Weather> {
+	weatherList: Weather[];
+	favoriteList: Weather[];
 }
 
 const initialState = {

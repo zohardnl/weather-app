@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { ApiService } from "../services/api.service";
-import { WeatherService } from "../state";
+import { Weather, WeatherService } from "../state";
+import { Router } from "@angular/router";
 
 @Component({
 	selector: "app-favorites",
@@ -9,9 +10,9 @@ import { WeatherService } from "../state";
 	styleUrls: ["./favorites.component.scss"]
 })
 export class FavoritesComponent implements OnInit {
-	favoriteList: any[] = [];
+	favoriteList: Weather[] = [];
 
-	constructor(private api: ApiService, private weather: WeatherService) {}
+	constructor(public api: ApiService, private weather: WeatherService, private router: Router) {}
 
 	ngOnInit() {
 		this.weather.getfavoriteList().subscribe(list => {
@@ -19,7 +20,12 @@ export class FavoritesComponent implements OnInit {
 		});
 	}
 
-	getImage(img: string) {
-		return `${environment.apiImage}${img}@2x.png`;
+	sendToInfo(value: string) {
+		this.api.sendWeatherRequest(value);
+		this.router.navigate([""]);
+	}
+
+	removeFavorite(item: Weather) {
+		this.weather.removeFavorite(item);
 	}
 }

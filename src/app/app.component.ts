@@ -7,5 +7,5 @@ import { ApiService } from "./services/api.service";
 	styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-	constructor(private api: ApiService) {}
+	constructor(public api: ApiService) {}
 }

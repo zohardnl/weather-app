@@ -1,23 +1,53 @@
 <div
-	class="favorite-info animated bounceInLeft slow"
-	fxLayout="row"
-	fxLayoutAlign="space-around center"
-	fxLayout.xs="column"
-	fxLayout.sm="column"
-	*ngIf="favoriteList && favoriteList.length > 0"
+	class="favorite-info__wrapper"
+	fxLayout="column"
+	fxLayoutAlign="space-between center"
+	*ngIf="favoriteList && favoriteList.length > 0 && !api.isLoading"
 >
-	<div
-		*ngFor="let item of favoriteList; let i = index"
-		fxLayout="column"
-		fxLayoutAlign="center center"
-	>
-		<h1 class="favorite-info__title">{{ api.cities[i] | titlecase }}</h1>
+	<h1 class="favorite-info__main-title animated fadeInDown">
+		Favorite Locations
+	</h1>
 
-		<div class="favorite-info__item">
-			<span>Today</span>
-			<span><img [src]="getImage(item.weather[0].icon)" alt="status-image"/></span>
-			<span>{{ item.main.temp | number: "1.0-0" }}°</span>
-			<span>{{ item.weather[0].description }}</span>
+	<div
+		class="favorite-info animated bounceInLeft slow"
+		fxLayout="row"
+		fxLayoutAlign="space-around center"
+		fxLayout.xs="column"
+		fxLayout.sm="column"
+	>
+		<div
+			*ngFor="let item of favoriteList; let i = index"
+			class="favorite-info__item"
+			fxLayout="column"
+			fxLayoutAlign="space-around center"
+		>
+			<div class="flip-card-inner">
+				<div class="front-info">
+					<h2 class="favorite-info__subtitle">
+						{{ item.name | titlecase }}
+					</h2>
+
+					<mat-icon class="favorite-info__item__city">location_city</mat-icon>
+				</div>
+
+				<div class="back-info">
+					<button
+						class="favorite-info__item__info"
+						(click)="sendToInfo(item.name)"
+						mat-raised-button
+					>
+						Info
+					</button>
+					<button
+						class="favorite-info__item__remove"
+						(click)="removeFavorite(item)"
+						mat-raised-button
+						color="accent"
+					>
+						Remove
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

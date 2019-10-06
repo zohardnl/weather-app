@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import * as moment from "moment";
 import { environment } from "../../environments/environment";
-import { WeatherService } from "../state";
+import { Weather, WeatherService } from "../state";
 import { ModalService } from "../services/modal.service";
 import { Router } from "@angular/router";
 
@@ -12,11 +12,11 @@ import { Router } from "@angular/router";
 	styleUrls: ["./weather-info.component.scss"]
 })
 export class WeatherInfoComponent implements OnInit {
-	weatherList: any[] = [];
-	favoriteList: any[] = [];
+	weatherList: Weather[] = [];
+	favoriteList: Weather[] = [];
 
 	constructor(
-		private api: ApiService,
+		public api: ApiService,
 		private weather: WeatherService,
 		private modal: ModalService,
 		private router: Router
@@ -39,12 +39,15 @@ export class WeatherInfoComponent implements OnInit {
 		return `${environment.apiImage}${img}@2x.png`;
 	}
 
-	addToFavorite(favorite: any) {
-		if (!this.favoriteList.includes(favorite)) {
+	addToFavorite(favorite: Weather) {
+		let index: number;
+		index = this.favoriteList.findIndex(val => val.name === favorite.name);
+
+		if (index > -1) {
+			this.modal.openModal("This location already exist!", "Favorite");
+		} else {
 			this.weather.updateFavorite(favorite);
 			this.router.navigate(["favorites"]);
-		} else {
-			this.modal.openModal("This city already exist!", "Favorite");
 		}
 	}
 }
