@@ -21,7 +21,7 @@ export class FavoritesComponent implements OnInit {
 	}
 
 	sendToInfo(value: string) {
-		this.api.sendWeatherRequest(value);
+		this.api.sendWeatherRequest(value).subscribe();
 		this.router.navigate([""]);
 	}
 
