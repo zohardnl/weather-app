@@ -1,17 +1,9 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
-import { MatButtonModule } from "@angular/material/button";
-import { MatInputModule } from "@angular/material/input";
-import { MatIconModule } from "@angular/material/icon";
-import { MatFormFieldModule } from "@angular/material/form-field";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MatMenuModule } from "@angular/material/menu";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
-import { MatDialogModule } from "@angular/material/dialog";
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -20,7 +12,22 @@ import { FavoritesComponent } from "./favorites/favorites.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AkitaNgDevtools } from "@datorama/akita-ngdevtools";
 import { NG_ENTITY_SERVICE_CONFIG } from "@datorama/akita-ng-entity-service";
-import { AddonComponent } from "./addon/addon.component";
+import { LoginComponent } from "./auth/login/login.component";
+import { SigupComponent } from "./auth/sigup/sigup.component";
+import {
+	MatCardModule,
+	MatToolbarModule,
+	MatSlideToggleModule,
+	MatProgressSpinnerModule,
+	MatDialogModule,
+	MatMenuModule,
+	MatSnackBarModule,
+	MatFormFieldModule,
+	MatIconModule,
+	MatInputModule,
+	MatButtonModule
+} from "@angular/material";
+import { AuthInterceptor } from "./auth/auth-interceptor";
 
 @NgModule({
 	declarations: [
@@ -28,7 +35,8 @@ import { AddonComponent } from "./addon/addon.component";
 		NavbarComponent,
 		WeatherInfoComponent,
 		FavoritesComponent,
-		AddonComponent
+		LoginComponent,
+		SigupComponent
 	],
 	imports: [
 		BrowserModule,
@@ -46,6 +54,9 @@ import { AddonComponent } from "./addon/addon.component";
 		MatDialogModule,
 		MatProgressSpinnerModule,
 		BrowserAnimationsModule,
+		MatSlideToggleModule,
+		MatCardModule,
+		MatToolbarModule,
 		AkitaNgDevtools.forRoot({ maxAge: 25 })
 	],
 	entryComponents: [],
@@ -55,7 +66,8 @@ import { AddonComponent } from "./addon/addon.component";
 			useValue: {
 				baseUrl: "https://jsonplaceholder.typicode.com"
 			}
-		}
+		},
+		{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
 	],
 	bootstrap: [AppComponent]
 })

@@ -1,24 +1,61 @@
-<div class="weather-header" fxLayout="row" fxLayoutAlign="space-between center">
-	<div class="weather-header__item" routerLink="">
-		<img src="assets/images/logo.png" alt="herolo-logo" class="weather-header__logo" />
+<div fxLayout="row" fxLayoutAlign="space-between center" class="weather-header__sub">
+	<div class="weather-header__sub__logo" routerLink="weather">
+		<img src="assets/images/logo.png" alt="herolo-logo" class="weather-header__sub__logo--image" />
 	</div>
 
+	<div class="weather-header__sub__container" fxLayoutAlign="space-around center">
+		<button
+			mat-stroked-button
+			class="weather-header__sub__container__login"
+			routerLink="login"
+			*ngIf="!userIsAuthenticated"
+		>
+			Login
+		</button>
+		<button
+			mat-stroked-button
+			class="weather-header__sub__container__signup"
+			routerLink="signup"
+			*ngIf="!userIsAuthenticated"
+		>
+			Signup
+		</button>
+		<button
+			mat-stroked-button
+			color="warn"
+			class="weather-header__sub__container__logout"
+			(click)="onLogout()"
+			*ngIf="userIsAuthenticated"
+		>
+			Logout
+		</button>
+		<mat-slide-toggle
+			color="primary"
+			(click)="changeRoute()"
+			class="weather-header__sub__container__route"
+			*ngIf="userIsAuthenticated"
+		>
+			Weather / Favorites
+		</mat-slide-toggle>
+	</div>
+</div>
+
+<div
+	class="weather-header"
+	fxLayout="row"
+	fxLayoutAlign="center center"
+	*ngIf="userIsAuthenticated"
+>
 	<div class="weather-header__item">
 		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">
 			<input
 				type="search"
 				placeholder="Search Weather..."
 				ngModel
+				(click)="searchListener()"
 				#search="ngModel"
 				pattern="^[\S][^\u0590-\u05FF]+$"
 			/>
 		</div>
-	</div>
-
-	<div class="weather-header__navigate" fxLayoutAlign="center center">
-		<button mat-raised-button color="primary" routerLink="favorites" *ngIf="!isFavorite()">
-			To Favorites
-		</button>
-		<button mat-raised-button color="primary" routerLink="" *ngIf="isFavorite()">To Home</button>
 	</div>
 </div>

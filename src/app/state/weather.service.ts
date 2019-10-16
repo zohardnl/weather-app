@@ -3,6 +3,8 @@ import { WeatherStore, WeatherState } from "./weather.store";
 import { NgEntityService } from "@datorama/akita-ng-entity-service";
 import { WeatherQuery } from "./weather.query";
 import { Weather } from "./weather.model";
+import { guid } from "@datorama/akita";
+import { Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class WeatherService extends NgEntityService<WeatherState> {
@@ -11,25 +13,21 @@ export class WeatherService extends NgEntityService<WeatherState> {
 	}
 
 	updateWeather(data: Weather[]) {
-		this.store.update({ weatherList: data });
+		data.forEach(entity => {
+			entity.id = guid();
+		});
+		this.store.set(data);
 	}
 
-	updateFavorite(data: Weather) {
-		this.store.update({ favoriteList: [...this.store._value().favoriteList, data] });
+	setLoading(loader: boolean) {
+		this.store.update({ isLoading: loader });
 	}
 
-	removeFavorite(item: Weather) {
-		let arr: Weather[];
-		arr = this.store._value().favoriteList;
-		arr = arr.filter(val => val !== item);
-		this.store.update({ favoriteList: arr });
-	}
-
-	getWeatherList() {
+	getWeatherList(): Observable<Weather[]> {
 		return this.query.weatherList$;
 	}
 
-	getfavoriteList() {
-		return this.query.favoriteList$;
+	getLoading() {
+		return this.query.isLoading$;
 	}
 }

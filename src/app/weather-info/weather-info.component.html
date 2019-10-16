@@ -1,15 +1,9 @@
-<!--<app-addon-->
-<!--	*ngIf="weatherList && weatherList.length > 0 && !api.isLoading"-->
-<!--	(click)="addToFavorite(item)"-->
-<!--&gt;</app-addon>-->
-
 <div
 	class="weather-info animated bounceInLeft slow"
 	fxLayout="row"
 	fxLayoutAlign="space-around center"
 	fxLayout.xs="column"
 	fxLayout.sm="column"
-	*ngIf="weatherList && weatherList.length > 0 && !api.isLoading"
 >
 	<div
 		class="weather-info__item"
@@ -20,7 +14,7 @@
 		<span *ngIf="i === 0">{{ item.name | titlecase }}</span>
 		<span *ngIf="i === 0">Today</span>
 		<span *ngIf="i !== 0">{{ getDay(item.day) }}</span>
-		<span *ngIf="i !== 0"><img [src]="getImage(item.image)" alt="status-image"/></span>
+		<span *ngIf="i !== 0"><img [src]="getImage(item.image)" alt="weather-image"/></span>
 		<span>{{ item.temp | number: "1.0-0" }}°</span>
 		<span>{{ item.status }}</span>
 		<button (click)="addToFavorite(item)" mat-raised-button *ngIf="i === 0">

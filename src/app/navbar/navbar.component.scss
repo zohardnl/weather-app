@@ -7,36 +7,16 @@
 		margin-bottom: 1em;
 	}
 
-	padding: 1em 3em;
+	padding: 2em 0;
 	flex-wrap: wrap;
 
 	&__item {
 		&:first-child {
-			transition: all 1s;
-
-			&:hover {
-				transform: scale(1.2);
-			}
-
-			@include mobile {
-				margin: 0 auto 1em;
-			}
-
-			img {
-				width: 100%;
-			}
-
-			width: 10em;
-			margin-top: 2em;
-			cursor: pointer;
-		}
-
-		&:nth-child(2) {
 			@include mobile {
 				width: 100%;
 				margin-bottom: 2em;
 			}
-			width: 25em;
+			width: 30em;
 		}
 	}
 
@@ -76,6 +56,45 @@
 
 		button {
 			min-width: 10em;
+		}
+	}
+
+	&__sub {
+		width: 100%;
+		padding: 15px 30px;
+		background-color: #ceefff6b;
+
+		&__container {
+			width: 30%;
+
+			&__signup {
+				color: $main-color;
+			}
+
+			&__route {
+				font-weight: bold;
+				font-size: 13px;
+			}
+		}
+
+		&__logo {
+			transition: all 1s;
+
+			&:hover {
+				transform: scale(1.2);
+			}
+
+			@include mobile {
+				margin: 0 auto 1em;
+			}
+
+			img {
+				width: 100%;
+			}
+
+			width: 7em;
+			margin-top: 10px;
+			cursor: pointer;
 		}
 	}
 }

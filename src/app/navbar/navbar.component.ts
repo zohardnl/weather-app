@@ -1,36 +1,34 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import {
-	debounceTime,
-	distinctUntilChanged,
-	distinctUntilKeyChanged,
-	filter,
-	switchMap,
-	tap
-} from "rxjs/operators";
+import { debounceTime, filter, switchMap, tap } from "rxjs/operators";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
 import { WeatherService } from "../state";
+import { Subscription } from "rxjs";
+import { AuthService } from "../auth/auth.service";
 
 @Component({
 	selector: "app-navbar",
 	templateUrl: "./navbar.component.html",
 	styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit, OnDestroy {
 	@ViewChild("search", { static: false }) weatherSearch: FormControl;
+	userIsAuthenticated: boolean;
+	private authListenerSubs: Subscription;
 
-	constructor(private api: ApiService, private route: Router, private weather: WeatherService) {}
+	constructor(
+		private api: ApiService,
+		private route: Router,
+		private weather: WeatherService,
+		public authService: AuthService
+	) {
+		this.authListenerSubs = this.authService.getAuthStatusListener().subscribe(isAuthenticated => {
+			this.userIsAuthenticated = isAuthenticated;
+		});
+	}
 
 	ngOnInit() {}
-
-	ngAfterViewInit(): void {
-		this.searchListener();
-	}
-
-	isFavorite() {
-		return this.route.url === "/favorites";
-	}
 
 	searchListener(): void {
 		// empty query stream handler, reset the weather when the query is empty or invalid.
@@ -39,7 +37,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 				filter(value => value.length === 0 || this.weatherSearch.invalid),
 				tap(() => {
 					this.weather.updateWeather([]);
-					this.api.isLoading = false;
+					this.weather.setLoading(false);
 				})
 			)
 			.subscribe();
@@ -49,15 +47,27 @@ export class NavbarComponent implements OnInit, AfterViewInit {
 			.pipe(
 				filter(value => value && value.length >= 2 && this.weatherSearch.valid),
 				tap(() => {
-					this.api.isLoading = true;
+					this.weather.setLoading(true);
 				}),
 				debounceTime(3000),
-				distinctUntilChanged(),
 				switchMap(value => this.api.sendWeatherRequest(value))
 			)
 			.subscribe(() => {
-				this.api.isLoading = false;
-				if (this.route.url === "/favorites") this.route.navigate([""]);
+				this.weather.setLoading(false);
+				//this.route.navigate(["weather"]);
 			});
+	}
+
+	changeRoute() {
+		if (this.route.url === "/favorites") this.route.navigate(["/weather"]);
+		else this.route.navigate(["/favorites"]);
+	}
+
+	onLogout() {
+		this.authService.logout();
+	}
+
+	ngOnDestroy() {
+		// 	this.authListenerSubs.unsubscribe();
 	}
 }

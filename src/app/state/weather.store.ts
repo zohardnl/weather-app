@@ -3,13 +3,11 @@ import { EntityState, EntityStore, StoreConfig } from "@datorama/akita";
 import { Weather } from "./weather.model";
 
 export interface WeatherState extends EntityState<Weather> {
-	weatherList: Weather[];
-	favoriteList: Weather[];
+	isLoading: boolean;
 }
 
 const initialState = {
-	weatherList: [],
-	favoriteList: []
+	isLoading: false
 };
 
 @Injectable({ providedIn: "root" })

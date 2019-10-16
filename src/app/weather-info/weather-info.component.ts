@@ -14,9 +14,10 @@ import { Router } from "@angular/router";
 export class WeatherInfoComponent implements OnInit {
 	weatherList: Weather[] = [];
 	favoriteList: Weather[] = [];
+	isLoading: boolean;
 
 	constructor(
-		public api: ApiService,
+		private api: ApiService,
 		private weather: WeatherService,
 		private modal: ModalService,
 		private router: Router
@@ -26,8 +27,12 @@ export class WeatherInfoComponent implements OnInit {
 		this.weather.getWeatherList().subscribe(list => {
 			this.weatherList = list;
 		});
-		this.weather.getfavoriteList().subscribe(list => {
+		this.api.getWeather();
+		this.api.getWeatherListener().subscribe(list => {
 			this.favoriteList = list;
+		});
+		this.weather.getLoading().subscribe(load => {
+			this.isLoading = load;
 		});
 	}
 
@@ -46,7 +51,7 @@ export class WeatherInfoComponent implements OnInit {
 		if (index > -1) {
 			this.modal.openModal("This location already exist!", "Favorite");
 		} else {
-			this.weather.updateFavorite(favorite);
+			this.api.updateDbFav(favorite);
 			this.router.navigate(["favorites"]);
 		}
 	}

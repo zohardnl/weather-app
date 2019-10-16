@@ -1,22 +1,28 @@
-import { Component, OnInit } from "@angular/core";
-import { environment } from "../../environments/environment";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { Weather, WeatherService } from "../state";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
 	selector: "app-favorites",
 	templateUrl: "./favorites.component.html",
 	styleUrls: ["./favorites.component.scss"]
 })
-export class FavoritesComponent implements OnInit {
+export class FavoritesComponent implements OnInit, OnDestroy {
 	favoriteList: Weather[] = [];
+	isLoading: boolean;
+	private weatherSub: Subscription;
 
-	constructor(public api: ApiService, private weather: WeatherService, private router: Router) {}
+	constructor(private api: ApiService, public weather: WeatherService, private router: Router) {}
 
 	ngOnInit() {
-		this.weather.getfavoriteList().subscribe(list => {
-			this.favoriteList = list;
+		this.api.getWeather();
+		this.weatherSub = this.api.getWeatherListener().subscribe(res => {
+			this.favoriteList = res;
+		});
+		this.weather.getLoading().subscribe(load => {
+			this.isLoading = load;
 		});
 	}
 
@@ -25,7 +31,11 @@ export class FavoritesComponent implements OnInit {
 		this.router.navigate([""]);
 	}
 
-	removeFavorite(item: Weather) {
-		this.weather.removeFavorite(item);
+	removeFavorite(itemId: string) {
+		this.api.removeFav(itemId);
+	}
+
+	ngOnDestroy(): void {
+		this.weatherSub.unsubscribe();
 	}
 }

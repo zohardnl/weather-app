@@ -2,7 +2,7 @@
 	class="favorite-info__wrapper"
 	fxLayout="column"
 	fxLayoutAlign="space-between center"
-	*ngIf="favoriteList && favoriteList.length > 0 && !api.isLoading"
+	*ngIf="favoriteList && favoriteList.length > 0 && !isLoading"
 >
 	<h1 class="favorite-info__main-title animated fadeInDown">
 		Favorite Locations
@@ -34,15 +34,14 @@
 					<button
 						class="favorite-info__item__info"
 						(click)="sendToInfo(item.name)"
-						mat-raised-button
+						mat-stroked-button
 					>
 						Info
 					</button>
 					<button
 						class="favorite-info__item__remove"
-						(click)="removeFavorite(item)"
+						(click)="removeFavorite(item.backId)"
 						mat-raised-button
-						color="accent"
 					>
 						Remove
 					</button>
