@@ -1,12 +1,13 @@
 .login {
 	width: 30%;
-	height: 40%;
 	margin: 0 auto;
-	padding: 1.5em;
+	padding: 2.5em;
 	border-radius: 10px;
 	background: aliceblue;
 
 	&__form {
-		height: 100%;
+		&__login {
+			margin-top: 1em;
+		}
 	}
 }

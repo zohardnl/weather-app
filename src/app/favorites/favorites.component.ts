@@ -28,7 +28,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
 	sendToInfo(value: string) {
 		this.api.sendWeatherRequest(value).subscribe();
-		this.router.navigate([""]);
+		this.router.navigate(["weather"]);
 	}
 
 	removeFavorite(itemId: string) {
