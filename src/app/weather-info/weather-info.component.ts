@@ -41,7 +41,7 @@ export class WeatherInfoComponent implements OnInit {
 	}
 
 	getImage(img: string) {
-		return `${environment.apiImage}${img}@2x.png`;
+		return `${environment.apiImage}/${img}@2x.png`;
 	}
 
 	addToFavorite(favorite: Weather) {

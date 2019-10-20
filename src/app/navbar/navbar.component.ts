@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 			)
 			.subscribe(() => {
 				this.weather.setLoading(false);
-				//this.route.navigate(["weather"]);
+				this.route.navigate(["weather"]);
 			});
 	}
 
@@ -68,6 +68,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		// 	this.authListenerSubs.unsubscribe();
+		this.authListenerSubs.unsubscribe();
 	}
 }

@@ -1,5 +1,12 @@
+@import "../../../shared/mixins";
+@import "../../../shared/vars";
+
 .login {
-	width: 30%;
+	@include mobile {
+		width: 60%;
+	}
+
+	width: 35em;
 	margin: 0 auto;
 	padding: 2.5em;
 	border-radius: 10px;

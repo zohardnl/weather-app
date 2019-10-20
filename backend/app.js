@@ -7,12 +7,13 @@ const userRoutes = require("./routes/user");
 const app = express();
 
 mongoose
-	.connect("mongodb+srv://daniel:F3XcwvnrK3LOjg8Q@danieldb-zfafp.mongodb.net/weather")
+	.connect(
+		"mongodb+srv://daniel:" + process.env.MONGO_ATLAS_PW + "@danieldb-zfafp.mongodb.net/weather"
+	)
 	.then(() => {
 		console.log("Connected to database!");
 	})
-	.catch(e => {
-		console.log(e);
+	.catch(() => {
 		console.log("Connection failed!");
 	});
 

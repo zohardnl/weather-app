@@ -64,7 +64,7 @@ export class ApiService {
 			temp: item.temp,
 			status: item.status
 		};
-		this.http.post<any>("http://localhost:3000/api/weather", item).subscribe(result => {
+		this.http.post<any>(`${environment.weatherUrl}`, item).subscribe(result => {
 			weatherItem.backId = result.weatherId;
 			this.favoriteWeather.push(weatherItem);
 			this.favWeather.next([...this.favoriteWeather]);
@@ -73,7 +73,7 @@ export class ApiService {
 
 	getWeather() {
 		this.http
-			.get<any>("http://localhost:3000/api/weather")
+			.get<any>(`${environment.weatherUrl}`)
 			.pipe(
 				map(weatherData => {
 					return weatherData.weather.map(item => {
@@ -99,7 +99,7 @@ export class ApiService {
 	}
 
 	removeFav(itemId: string) {
-		this.http.delete("http://localhost:3000/api/weather/" + itemId).subscribe(() => {
+		this.http.delete(`${environment.weatherUrl}/` + itemId).subscribe(() => {
 			this.favoriteWeather = this.favoriteWeather.filter(val => val.backId !== itemId);
 			this.favWeather.next([...this.favoriteWeather]);
 		});

@@ -1,11 +1,17 @@
-<div fxLayout="row" fxLayoutAlign="space-between center" class="weather-header__sub">
+<div
+	fxLayout="row"
+	fxLayout.xs="column"
+	fxLayoutAlign="space-between center"
+	class="weather-header__sub"
+>
 	<div class="weather-header__sub__logo" routerLink="weather">
 		<img src="assets/images/logo.png" alt="herolo-logo" class="weather-header__sub__logo--image" />
 	</div>
 
 	<div class="weather-header__sub__container" fxLayoutAlign="space-around center">
 		<button
-			mat-stroked-button
+			mat-raised-button
+			color="primary"
 			class="weather-header__sub__container__login"
 			routerLink="login"
 			*ngIf="!userIsAuthenticated"
@@ -13,7 +19,7 @@
 			Login
 		</button>
 		<button
-			mat-stroked-button
+			mat-raised-button
 			class="weather-header__sub__container__signup"
 			routerLink="signup"
 			*ngIf="!userIsAuthenticated"
@@ -21,7 +27,7 @@
 			Signup
 		</button>
 		<button
-			mat-stroked-button
+			mat-raised-button
 			color="warn"
 			class="weather-header__sub__container__logout"
 			(click)="onLogout()"

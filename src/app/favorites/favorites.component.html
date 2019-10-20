@@ -1,9 +1,4 @@
-<div
-	class="favorite-info__wrapper"
-	fxLayout="column"
-	fxLayoutAlign="space-between center"
-	*ngIf="favoriteList && favoriteList.length > 0 && !isLoading"
->
+<div class="favorite-info__wrapper" fxLayout="column" fxLayoutAlign="space-between center">
 	<h1 class="favorite-info__main-title animated fadeInDown">
 		Favorite Locations
 	</h1>
@@ -14,6 +9,7 @@
 		fxLayoutAlign="space-around center"
 		fxLayout.xs="column"
 		fxLayout.sm="column"
+		*ngIf="favoriteList && favoriteList.length > 0 && !isLoading"
 	>
 		<div
 			*ngFor="let item of favoriteList; let i = index"

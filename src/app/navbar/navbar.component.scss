@@ -3,8 +3,7 @@
 
 .weather-header {
 	@include mobile {
-		padding: 1em;
-		margin-bottom: 1em;
+		padding: 2em 2em 0;
 	}
 
 	padding: 2em 0;
@@ -65,11 +64,11 @@
 		background-color: #ceefff6b;
 
 		&__container {
-			width: 15%;
-
-			&__signup {
-				color: $main-color;
+			@include mobile {
+				width: 100%;
 			}
+
+			width: 20em;
 
 			&__route {
 				font-weight: bold;
