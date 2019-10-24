@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError, map } from "rxjs/operators";
-import { Observable, of, Subject } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { ModalService } from "./modal.service";
 import { environment } from "../../environments/environment";
 import * as moment from "moment";
-import { Weather, WeatherService } from "../state";
+import { autoComplete, Weather, WeatherService } from "../state";
 
 @Injectable({
 	providedIn: "root"
@@ -13,6 +13,8 @@ import { Weather, WeatherService } from "../state";
 export class ApiService {
 	filterdWeather: Weather[] = [];
 	favoriteWeather: Weather[] = [];
+	acArr: autoComplete[];
+	private autoComplete = new BehaviorSubject<autoComplete[]>([]);
 	private favWeather = new Subject<Weather[]>();
 
 	constructor(
@@ -55,6 +57,75 @@ export class ApiService {
 		);
 	}
 
+	getWeatherHttpByKey() {
+		// return this.http.get(
+		// 	`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=Kc8D929PB5lrFWDQM9Wivqydivv8BL3z&metric=true`
+		// );
+
+		return this.http.get<any>("http://localhost:3000/api/weather/daily");
+	}
+
+	getWeatherByKey() {
+		return this.getWeatherHttpByKey();
+	}
+
+	getForecastHttp() {
+		return this.http.get<any>("http://localhost:3000/api/weather/forecast");
+	}
+
+	getForecast() {
+		return this.getForecastHttp().pipe(
+			map(res => {
+				if (res.DailyForecasts.length > 0) {
+					this.filterdWeather = res.DailyForecasts.map(val => {
+						return {
+							day: val.Date,
+							image: val.Day.Icon,
+							temp: val.Temperature.Minimum.Value,
+							status: val.Day.IconPhrase
+						} as Weather;
+					});
+					this.weather.updateWeather(this.filterdWeather);
+				}
+			})
+		);
+	}
+
+	getAutoCompleteHttpSearch() {
+		// return this.http.get<any>(
+		// 	`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=Kc8D929PB5lrFWDQM9Wivqydivv8BL3z&q=${value}`
+		// );
+
+		return this.http.get<any>("http://localhost:3000/api/weather/auto");
+	}
+
+	getAutoCompleteSearch() {
+		return this.getAutoCompleteHttpSearch().pipe(
+			map(result => {
+				if (result.length > 0) {
+					this.acArr = result.map(val => {
+						return {
+							city: val.LocalizedName,
+							country: val.Country.LocalizedName,
+							key: val.Key
+						} as autoComplete;
+					});
+				}
+				this.autoComplete.next(this.acArr);
+			}),
+			catchError(() =>
+				of(
+					this.modal.openModal("No Results for this search!", "Search"),
+					this.autoComplete.next([])
+				)
+			)
+		);
+	}
+
+	getAutoComplete() {
+		return this.autoComplete.asObservable();
+	}
+
 	updateDbFav(item: Weather) {
 		const weatherItem: Weather = {
 			backId: "",
@@ -94,7 +165,7 @@ export class ApiService {
 			});
 	}
 
-	getWeatherListener() {
+	getFavWeatherListener() {
 		return this.favWeather.asObservable();
 	}
 

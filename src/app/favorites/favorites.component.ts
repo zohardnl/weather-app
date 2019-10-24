@@ -18,7 +18,7 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.api.getWeather();
-		this.weatherSub = this.api.getWeatherListener().subscribe(res => {
+		this.weatherSub = this.api.getFavWeatherListener().subscribe(res => {
 			this.favoriteList = res;
 		});
 		this.weather.getLoading().subscribe(load => {

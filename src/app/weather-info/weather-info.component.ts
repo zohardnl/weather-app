@@ -28,7 +28,7 @@ export class WeatherInfoComponent implements OnInit {
 			this.weatherList = list;
 		});
 		this.api.getWeather();
-		this.api.getWeatherListener().subscribe(list => {
+		this.api.getFavWeatherListener().subscribe(list => {
 			this.favoriteList = list;
 		});
 		this.weather.getLoading().subscribe(load => {
@@ -41,7 +41,11 @@ export class WeatherInfoComponent implements OnInit {
 	}
 
 	getImage(img: string) {
-		return `${environment.apiImage}/${img}@2x.png`;
+		//return `${environment.apiImage}/${img}@2x.png`;
+		if (+img >= 1 && +img < 10) {
+			img = "0" + img;
+		}
+		return `https://developer.accuweather.com/sites/default/files/${img}-s.png`;
 	}
 
 	addToFavorite(favorite: Weather) {

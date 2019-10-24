@@ -25,7 +25,8 @@ import {
 	MatFormFieldModule,
 	MatIconModule,
 	MatInputModule,
-	MatButtonModule
+	MatButtonModule,
+	MatAutocompleteModule
 } from "@angular/material";
 import { AuthInterceptor } from "./auth/auth-interceptor";
 
@@ -57,6 +58,7 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
 		MatSlideToggleModule,
 		MatCardModule,
 		MatToolbarModule,
+		MatAutocompleteModule,
 		AkitaNgDevtools.forRoot({ maxAge: 25 })
 	],
 	entryComponents: [],

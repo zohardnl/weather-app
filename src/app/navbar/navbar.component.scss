@@ -9,6 +9,29 @@
 	padding: 2em 0;
 	flex-wrap: wrap;
 
+	&__auto-complete {
+		width: 30em;
+
+		#search-complete {
+			width: 100%;
+			color: $main-color;
+
+			.mat-form-field-appearance-outline .mat-form-field-outline {
+				color: $main-color;
+			}
+
+			mat-label {
+				color: $main-color;
+			}
+
+			input {
+				&::placeholder {
+					color: $main-color;
+				}
+			}
+		}
+	}
+
 	&__item {
 		&:first-child {
 			@include mobile {

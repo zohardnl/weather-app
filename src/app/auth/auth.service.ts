@@ -62,7 +62,7 @@ export class AuthService {
 		if (expiresIn > 0) {
 			this.token = authInformation.token;
 			this.isAuthenticated = true;
-			this.setAuthTimer(expiresIn);
+			this.setAuthTimer(expiresIn / 1000);
 			this.authStatusListener.next(true);
 		}
 	}

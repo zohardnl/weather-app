@@ -1,0 +1,168 @@
+{
+	"Headline": {
+		"EffectiveDate": "2019-10-27T08:00:00+03:00",
+		"EffectiveEpochDate": 1572152400,
+		"Severity": 4,
+		"Text": "Pleasant Sunday",
+		"Category": "",
+		"EndDate": null,
+		"EndEpochDate": null,
+		"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/extended-weather-forecast/215613?unit=c&lang=en-us",
+		"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?unit=c&lang=en-us"
+	},
+	"DailyForecasts": [
+		{
+			"Date": "2019-10-22T07:00:00+03:00",
+			"EpochDate": 1571716800,
+			"Temperature": {
+				"Minimum": {
+					"Value": 21.5,
+					"Unit": "C",
+					"UnitType": 17
+				},
+				"Maximum": {
+					"Value": 30.4,
+					"Unit": "C",
+					"UnitType": 17
+				}
+			},
+			"Day": {
+				"Icon": 3,
+				"IconPhrase": "Partly sunny",
+				"HasPrecipitation": false
+			},
+			"Night": {
+				"Icon": 36,
+				"IconPhrase": "Intermittent clouds",
+				"HasPrecipitation": false
+			},
+			"Sources": ["AccuWeather"],
+			"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?unit=c&lang=en-us",
+			"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?unit=c&lang=en-us"
+		},
+		{
+			"Date": "2019-10-23T07:00:00+03:00",
+			"EpochDate": 1571803200,
+			"Temperature": {
+				"Minimum": {
+					"Value": 19.8,
+					"Unit": "C",
+					"UnitType": 17
+				},
+				"Maximum": {
+					"Value": 26.9,
+					"Unit": "C",
+					"UnitType": 17
+				}
+			},
+			"Day": {
+				"Icon": 17,
+				"IconPhrase": "Partly sunny w/ t-storms",
+				"HasPrecipitation": true,
+				"PrecipitationType": "Rain",
+				"PrecipitationIntensity": "Light"
+			},
+			"Night": {
+				"Icon": 39,
+				"IconPhrase": "Partly cloudy w/ showers",
+				"HasPrecipitation": true,
+				"PrecipitationType": "Rain",
+				"PrecipitationIntensity": "Light"
+			},
+			"Sources": ["AccuWeather"],
+			"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=1&unit=c&lang=en-us",
+			"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=1&unit=c&lang=en-us"
+		},
+		{
+			"Date": "2019-10-24T07:00:00+03:00",
+			"EpochDate": 1571889600,
+			"Temperature": {
+				"Minimum": {
+					"Value": 20.2,
+					"Unit": "C",
+					"UnitType": 17
+				},
+				"Maximum": {
+					"Value": 26.4,
+					"Unit": "C",
+					"UnitType": 17
+				}
+			},
+			"Day": {
+				"Icon": 2,
+				"IconPhrase": "Mostly sunny",
+				"HasPrecipitation": false
+			},
+			"Night": {
+				"Icon": 33,
+				"IconPhrase": "Clear",
+				"HasPrecipitation": false
+			},
+			"Sources": ["AccuWeather"],
+			"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=2&unit=c&lang=en-us",
+			"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=2&unit=c&lang=en-us"
+		},
+		{
+			"Date": "2019-10-25T07:00:00+03:00",
+			"EpochDate": 1571976000,
+			"Temperature": {
+				"Minimum": {
+					"Value": 20.3,
+					"Unit": "C",
+					"UnitType": 17
+				},
+				"Maximum": {
+					"Value": 26.4,
+					"Unit": "C",
+					"UnitType": 17
+				}
+			},
+			"Day": {
+				"Icon": 3,
+				"IconPhrase": "Partly sunny",
+				"HasPrecipitation": false
+			},
+			"Night": {
+				"Icon": 38,
+				"IconPhrase": "Mostly cloudy",
+				"HasPrecipitation": true,
+				"PrecipitationType": "Rain",
+				"PrecipitationIntensity": "Light"
+			},
+			"Sources": ["AccuWeather"],
+			"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=3&unit=c&lang=en-us",
+			"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=3&unit=c&lang=en-us"
+		},
+		{
+			"Date": "2019-10-26T07:00:00+03:00",
+			"EpochDate": 1572062400,
+			"Temperature": {
+				"Minimum": {
+					"Value": 20.3,
+					"Unit": "C",
+					"UnitType": 17
+				},
+				"Maximum": {
+					"Value": 24.2,
+					"Unit": "C",
+					"UnitType": 17
+				}
+			},
+			"Day": {
+				"Icon": 14,
+				"IconPhrase": "Partly sunny w/ showers",
+				"HasPrecipitation": true,
+				"PrecipitationType": "Rain",
+				"PrecipitationIntensity": "Light"
+			},
+			"Night": {
+				"Icon": 35,
+				"IconPhrase": "Partly cloudy",
+				"HasPrecipitation": false
+			},
+			"Sources": ["AccuWeather"],
+			"MobileLink": "http://m.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=4&unit=c&lang=en-us",
+			"Link": "http://www.accuweather.com/en/il/ashdod/215613/daily-weather-forecast/215613?day=4&unit=c&lang=en-us"
+		}
+	]
+}

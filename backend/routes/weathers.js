@@ -1,6 +1,9 @@
 const express = require("express");
 const Weather = require("../models/weather");
 const checkAuth = require("../middleware/check-auth");
+const data = require("../data/autoComplete");
+const daily = require("../data/currentWeather");
+const forecast = require("../data/forecast");
 const router = express.Router();
 
 router.post("", checkAuth, (req, res, next) => {
@@ -27,6 +30,18 @@ router.get("", (req, res, next) => {
 			weather: documents
 		});
 	});
+});
+
+router.get("/auto", (req, res, next) => {
+	res.status(200).json(data);
+});
+
+router.get("/daily", (req, res, next) => {
+	res.status(200).json(daily);
+});
+
+router.get("/forecast", (req, res, next) => {
+	res.status(200).json(forecast);
 });
 
 router.delete("/:id", checkAuth, (req, res, next) => {

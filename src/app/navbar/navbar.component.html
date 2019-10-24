@@ -28,7 +28,6 @@
 		</button>
 		<button
 			mat-raised-button
-			color="warn"
 			class="weather-header__sub__container__logout"
 			(click)="onLogout()"
 			*ngIf="userIsAuthenticated"
@@ -46,22 +45,60 @@
 	</div>
 </div>
 
-<div
-	class="weather-header"
-	fxLayout="row"
-	fxLayoutAlign="center center"
-	*ngIf="userIsAuthenticated"
->
-	<div class="weather-header__item">
-		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">
+<div class="weather-header" fxLayout="row" fxLayoutAlign="center center">
+	<!--	<div class="weather-header__item">-->
+	<!--		<div class="weather-header__search" fxLayout="row" fxLayoutAlign="center center">-->
+	<!--			<input-->
+	<!--				type="text"-->
+	<!--				placeholder="Search Weather..."-->
+	<!--				ngModel-->
+	<!--				(click)="getJsonData()"-->
+	<!--				#search="ngModel"-->
+	<!--				pattern="^[\S][^\u0590-\u05FF]+$"-->
+	<!--				[matAutocomplete]="auto"-->
+	<!--				[disabled]="!userIsAuthenticated"-->
+	<!--			/>-->
+	<!--			<button mat-button *ngIf="search.value" matSuffix mat-icon-button (click)="clearValue()">-->
+	<!--				<mat-icon>close</mat-icon>-->
+	<!--			</button>-->
+	<!--			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">-->
+	<!--				<mat-option-->
+	<!--					*ngFor="let option of filteredOptions"-->
+	<!--					[value]="option.city"-->
+	<!--					(click)="getSearch()"-->
+	<!--				>-->
+	<!--					{{ option.city }} , {{ option.country }}-->
+	<!--				</mat-option>-->
+	<!--			</mat-autocomplete>-->
+	<!--		</div>-->
+	<!--	</div>-->
+
+	<div class="weather-header__auto-complete">
+		<mat-form-field appearance="outline" color="primary" id="search-complete">
+			<mat-label>Search Weather</mat-label>
 			<input
 				type="search"
-				placeholder="Search Weather..."
-				ngModel
-				(click)="searchListener()"
-				#search="ngModel"
+				placeholder="Example: Tel-Aviv"
 				pattern="^[\S][^\u0590-\u05FF]+$"
+				ngModel
+				(click)="getJsonData()"
+				#search="ngModel"
+				matInput
+				[matAutocomplete]="auto"
+				[disabled]="!userIsAuthenticated"
 			/>
-		</div>
+			<button mat-button *ngIf="search.value" matSuffix mat-icon-button (click)="clearValue()">
+				<mat-icon>close</mat-icon>
+			</button>
+			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+				<mat-option
+					*ngFor="let option of filteredOptions"
+					[value]="option.city"
+					(click)="getSearch()"
+				>
+					{{ option.city }} , {{ option.country }}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
 	</div>
 </div>
