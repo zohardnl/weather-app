@@ -74,14 +74,13 @@
 	<!--	</div>-->
 
 	<div class="weather-header__auto-complete">
-		<mat-form-field appearance="outline" color="primary" id="search-complete">
+		<mat-form-field appearance="outline" color="primary">
 			<mat-label>Search Weather</mat-label>
 			<input
 				type="search"
 				placeholder="Example: Tel-Aviv"
 				pattern="^[\S][^\u0590-\u05FF]+$"
 				ngModel
-				(click)="getJsonData()"
 				#search="ngModel"
 				matInput
 				[matAutocomplete]="auto"
@@ -94,7 +93,7 @@
 				<mat-option
 					*ngFor="let option of filteredOptions"
 					[value]="option.city"
-					(click)="getSearch()"
+					(click)="getSearch(option.key)"
 				>
 					{{ option.city }} , {{ option.country }}
 				</mat-option>

@@ -4,7 +4,6 @@ import { catchError, map, tap } from "rxjs/operators";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { ModalService } from "./modal.service";
 import { environment } from "../../environments/environment";
-import * as moment from "moment";
 import { autoComplete, Weather, WeatherService } from "../state";
 
 @Injectable({
@@ -23,58 +22,22 @@ export class ApiService {
 		private weather: WeatherService
 	) {}
 
-	sendWeatherHttpRequest(value: string): Observable<any> {
+	getWeatherHttpByKey(val: number) {
+		return this.http.get(`${environment.apiDaily}/${val}?apikey=${environment.apiKey}`);
+	}
+
+	getWeatherByKey(val: number) {
+		return this.getWeatherHttpByKey(val).pipe(map(res => console.log(res)));
+	}
+
+	getForecastHttp(value: number) {
 		return this.http.get<any>(
-			`${environment.apiUrl}=${value}&units=metric&APPID=${environment.apiKey}`
+			`${environment.apiForecast}/${value}?apikey=${environment.apiKey}&metric=true`
 		);
 	}
 
-	sendWeatherRequest(value: string): Observable<any> {
-		return this.sendWeatherHttpRequest(value).pipe(
-			map(result => {
-				if (result.list.length > 0) {
-					this.filterdWeather = result.list.map(date => {
-						return {
-							name: result.city.name,
-							day: date.dt_txt,
-							image: date.weather[0].icon,
-							temp: date.main.temp,
-							status: date.weather[0].description
-						} as Weather;
-					});
-
-					this.filterdWeather = this.filterdWeather.filter((date, index) => {
-						let dt = moment(date.day).format("LT");
-						if (index !== 0) return dt === "12:00 AM";
-						else return date;
-					});
-					this.weather.updateWeather(this.filterdWeather);
-				}
-			}),
-			catchError(err =>
-				of(this.modal.openModal(`${err.error.message}`, "Search"), this.weather.updateWeather([]))
-			)
-		);
-	}
-
-	getWeatherHttpByKey() {
-		// return this.http.get(
-		// 	`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${key}?apikey=Kc8D929PB5lrFWDQM9Wivqydivv8BL3z&metric=true`
-		// );
-
-		return this.http.get<any>("http://localhost:3000/api/weather/daily");
-	}
-
-	getWeatherByKey() {
-		return this.getWeatherHttpByKey();
-	}
-
-	getForecastHttp() {
-		return this.http.get<any>("http://localhost:3000/api/weather/forecast");
-	}
-
-	getForecast() {
-		return this.getForecastHttp().pipe(
+	getForecast(value: number) {
+		return this.getForecastHttp(value).pipe(
 			map(res => {
 				if (res.DailyForecasts.length > 0) {
 					this.filterdWeather = res.DailyForecasts.map(val => {
@@ -91,16 +54,14 @@ export class ApiService {
 		);
 	}
 
-	getAutoCompleteHttpSearch() {
-		// return this.http.get<any>(
-		// 	`http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=Kc8D929PB5lrFWDQM9Wivqydivv8BL3z&q=${value}`
-		// );
-
-		return this.http.get<any>("http://localhost:3000/api/weather/auto");
+	getAutoCompleteHttpSearch(value: string) {
+		return this.http.get<any>(
+			`${environment.apiAutoComplete}?apikey=${environment.apiKey}&q=${value}`
+		);
 	}
 
-	getAutoCompleteSearch() {
-		return this.getAutoCompleteHttpSearch().pipe(
+	getAutoCompleteSearch(value: string) {
+		return this.getAutoCompleteHttpSearch(value).pipe(
 			map(result => {
 				if (result.length > 0) {
 					this.acArr = result.map(val => {
@@ -128,14 +89,14 @@ export class ApiService {
 
 	updateDbFav(item: Weather) {
 		const weatherItem: Weather = {
-			backId: "",
-			name: item.name,
+			name: "ashdod",
 			day: item.day,
 			image: item.image,
 			temp: item.temp,
 			status: item.status
 		};
-		this.http.post<any>(`${environment.weatherUrl}`, item).subscribe(result => {
+
+		this.http.post<any>(`${environment.weatherUrl}`, weatherItem).subscribe(result => {
 			weatherItem.backId = result.weatherId;
 			this.favoriteWeather.push(weatherItem);
 			this.favWeather.next([...this.favoriteWeather]);

@@ -41,11 +41,10 @@ export class WeatherInfoComponent implements OnInit {
 	}
 
 	getImage(img: string) {
-		//return `${environment.apiImage}/${img}@2x.png`;
 		if (+img >= 1 && +img < 10) {
 			img = "0" + img;
 		}
-		return `https://developer.accuweather.com/sites/default/files/${img}-s.png`;
+		return `${environment.apiImage}/${img}-s.png`;
 	}
 
 	addToFavorite(favorite: Weather) {

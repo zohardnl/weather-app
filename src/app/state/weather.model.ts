@@ -1,7 +1,8 @@
 export interface Weather {
 	id?: string;
-	backId: string;
+	backId?: string;
 	name?: string;
+	key?: number;
 	day: string;
 	image?: string;
 	temp: number;

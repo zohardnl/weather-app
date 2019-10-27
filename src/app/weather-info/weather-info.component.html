@@ -1,3 +1,17 @@
+<!--<div fxLayout="row" fxLayoutAlign="center center">-->
+<!--	<div class="weather-info__item" fxLayout="column" fxLayoutAlign="space-around center">-->
+<!--		<span>{{ item.name | titlecase }}</span>-->
+<!--		<span>Today</span>-->
+<!--		<span>{{ getDay(item.day) }}</span>-->
+<!--		<span><img [src]="getImage(item.image)" alt="weather-image"/></span>-->
+<!--		<span>{{ item.temp | number: "1.0-0" }}°</span>-->
+<!--		<span>{{ item.status }}</span>-->
+<!--		<button (click)="addToFavorite(item)" mat-raised-button>-->
+<!--			Save-->
+<!--		</button>-->
+<!--	</div>-->
+<!--</div>-->
+
 <div
 	class="weather-info animated bounceInLeft slow"
 	fxLayout="row"
@@ -11,14 +25,9 @@
 		fxLayout="column"
 		fxLayoutAlign="space-around center"
 	>
-		<span *ngIf="i === 0">{{ item.name | titlecase }}</span>
-		<span *ngIf="i === 0">Today</span>
-		<span *ngIf="i !== 0">{{ getDay(item.day) }}</span>
-		<span *ngIf="i !== 0"><img [src]="getImage(item.image)" alt="weather-image"/></span>
+		<span>{{ getDay(item.day) }}</span>
+		<span><img [src]="getImage(item.image)" alt="weather-image"/></span>
 		<span>{{ item.temp | number: "1.0-0" }}°</span>
 		<span>{{ item.status }}</span>
-		<button (click)="addToFavorite(item)" mat-raised-button *ngIf="i === 0">
-			Save
-		</button>
 	</div>
 </div>

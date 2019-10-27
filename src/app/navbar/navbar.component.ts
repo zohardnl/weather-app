@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { autoComplete, WeatherService } from "../state";
 import { Subscription } from "rxjs";
 import { AuthService } from "../auth/auth.service";
+import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from "rxjs/operators";
 
 @Component({
 	selector: "app-navbar",
@@ -35,47 +36,42 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	ngAfterViewInit() {
-		//this.searchListener();
+		this.searchListener();
 	}
 
-	// searchListener() {
-	// 	// empty query stream handler, reset the weather when the query is empty or invalid.
-	// 	this.weatherSearch.valueChanges
-	// 		.pipe(
-	// 			filter(value => value.length === 0 || this.weatherSearch.invalid),
-	// 			tap(() => {
-	// 				//this.weather.updateWeather([]);
-	// 				this.filteredOptions = [];
-	// 				this.weather.setLoading(false);
-	// 			})
-	// 		)
-	// 		.subscribe();
-	//
-	// 	// search weather stream handler;
-	// 	this.weatherSearch.valueChanges
-	// 		.pipe(
-	// 			filter(value => value && value.length >= 2 && this.weatherSearch.valid),
-	// 			tap(() => {
-	// 				this.weather.setLoading(true);
-	// 			}),
-	// 			debounceTime(3000),
-	// 			distinctUntilChanged(),
-	// 			switchMap(value => this.api.getAutoCompleteSearch(value))
-	// 		)
-	// 		.subscribe(res => {
-	// 			this.weather.setLoading(false);
-	// 			this.route.navigate(["weather"]);
-	// 		});
-	// }
+	searchListener() {
+		// empty query stream handler, reset the weather when the query is empty or invalid.
+		this.weatherSearch.valueChanges
+			.pipe(
+				filter(value => (value !== null && value.length === 0) || this.weatherSearch.invalid),
+				tap(() => {
+					this.weather.updateWeather([]);
+					this.filteredOptions = [];
+					this.weather.setLoading(false);
+				})
+			)
+			.subscribe();
 
-	getJsonData() {
-		this.api.getAutoCompleteSearch().subscribe();
+		// search weather stream handler;
+		this.weatherSearch.valueChanges
+			.pipe(
+				filter(value => value && value.length >= 2 && this.weatherSearch.valid),
+				tap(() => {
+					this.weather.setLoading(true);
+				}),
+				debounceTime(3000),
+				distinctUntilChanged(),
+				switchMap(value => this.api.getAutoCompleteSearch(value))
+			)
+			.subscribe(res => {
+				this.weather.setLoading(false);
+				this.route.navigate(["weather"]);
+			});
 	}
 
-	getSearch() {
-		this.api.getWeatherByKey().subscribe();
-
-		this.api.getForecast().subscribe();
+	getSearch(key: number) {
+		this.api.getForecast(key).subscribe();
+		this.api.getWeatherByKey(key).subscribe();
 	}
 
 	changeRoute() {

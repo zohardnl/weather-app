@@ -1,7 +1,7 @@
 @import "../../shared/mixins";
 @import "../../shared/vars";
 
-.weather-header {
+:host::ng-deep.weather-header {
 	@include mobile {
 		padding: 2em 2em 0;
 	}
@@ -12,11 +12,11 @@
 	&__auto-complete {
 		width: 30em;
 
-		#search-complete {
+		.mat-form-field {
 			width: 100%;
 			color: $main-color;
 
-			.mat-form-field-appearance-outline .mat-form-field-outline {
+			&-outline {
 				color: $main-color;
 			}
 
