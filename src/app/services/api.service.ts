@@ -39,13 +39,7 @@ export class ApiService {
 			}),
 			tap(res => {
 				this.weather.updateCurrent(res);
-			}),
-			catchError(() =>
-				of(
-					this.modal.openModal("No Results for this search!", "Search"),
-					this.weather.updateCurrent(null)
-				)
-			)
+			})
 		);
 	}
 
@@ -69,13 +63,7 @@ export class ApiService {
 					});
 					this.weather.updateWeather(this.filterdWeather);
 				}
-			}),
-			catchError(() =>
-				of(
-					this.modal.openModal("No Results for this search!", "Search"),
-					this.weather.updateWeather([])
-				)
-			)
+			})
 		);
 	}
 
@@ -96,15 +84,12 @@ export class ApiService {
 							key: val.Key
 						} as autoComplete;
 					});
+				} else {
+					this.modal.openModal("No Results for this search!", "Search");
+					this.acArr = [];
 				}
 				this.weather.updateAutoComplete(this.acArr);
-			}),
-			catchError(() =>
-				of(
-					this.modal.openModal("No Results for this search!", "Search"),
-					this.weather.updateAutoComplete([])
-				)
-			)
+			})
 		);
 	}
 
