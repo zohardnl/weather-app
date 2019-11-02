@@ -1,10 +1,13 @@
-@import "../../shared/mixins";
-@import "../../shared/vars";
+@import "../../../shared/mixins";
+@import "../../../shared/vars";
 
 .weather-info {
 	flex-wrap: wrap;
 	color: $main-color;
 	padding: 0 1em;
+
+	&__main {
+	}
 
 	&__item {
 		background: rgba(255, 255, 255, 0.1);
@@ -52,30 +55,51 @@
 			font-size: 1em;
 			font-style: italic;
 		}
+	}
 
-		//&:first-child {
-		//	@include mobile {
-		//		align-items: center !important;
-		//	}
-		//
-		//	@include tablet {
-		//		align-items: center !important;
-		//	}
-		//
-		//	background: transparent;
-		//	align-items: flex-start !important;
-		//
-		//	span:first-child {
-		//		font-size: 2em;
-		//	}
-		//
-		//	span:nth-child(3) {
-		//		font-size: 6em;
-		//	}
-		//
-		//	span:nth-child(4) {
-		//		font-size: 1em;
-		//	}
-		//}
+	&__current {
+		color: $main-color;
+		padding: 1em 0;
+
+		&__item {
+			width: 20em;
+			height: 25em;
+			margin-bottom: 1em;
+			border-radius: 1em;
+			background: #7896d1;
+			transition: all 0.5s;
+
+			&__save {
+				width: 20em;
+			}
+
+			span:first-child {
+				font-family: fantasy;
+				font-size: 3em;
+			}
+
+			span:nth-child(2) {
+				font-family: cursive;
+				font-weight: bold;
+				font-size: 1.5em;
+			}
+
+			span:nth-child(3) {
+				width: 5em;
+				height: 5em;
+				margin: 0 auto;
+				display: flex;
+				align-items: center;
+
+				img {
+					width: 100%;
+				}
+			}
+
+			span:nth-child(4) {
+				font-size: 3em;
+				font-family: cursive;
+			}
+		}
 	}
 }

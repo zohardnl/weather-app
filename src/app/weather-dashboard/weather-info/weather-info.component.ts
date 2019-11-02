@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { ApiService } from "../services/api.service";
+import { ApiService } from "../../services/api.service";
 import * as moment from "moment";
-import { environment } from "../../environments/environment";
-import { Weather, WeatherService } from "../state";
-import { ModalService } from "../services/modal.service";
+import { environment } from "../../../environments/environment";
+import { Weather, WeatherService } from "../../state";
+import { ModalService } from "../../services/modal.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 export class WeatherInfoComponent implements OnInit {
 	weatherList: Weather[] = [];
 	favoriteList: Weather[] = [];
+	currentWeather: Weather;
 	isLoading: boolean;
 
 	constructor(
@@ -24,15 +25,18 @@ export class WeatherInfoComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+		this.api.getWeather();
 		this.weather.getWeatherList().subscribe(list => {
 			this.weatherList = list;
 		});
-		this.api.getWeather();
 		this.api.getFavWeatherListener().subscribe(list => {
 			this.favoriteList = list;
 		});
 		this.weather.getLoading().subscribe(load => {
 			this.isLoading = load;
+		});
+		this.weather.getCurrentWeather().subscribe(weather => {
+			this.currentWeather = weather;
 		});
 	}
 

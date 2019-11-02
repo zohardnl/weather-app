@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./navbar/navbar.component";
-import { WeatherInfoComponent } from "./weather-info/weather-info.component";
+import { WeatherInfoComponent } from "./weather-dashboard/weather-info/weather-info.component";
 import { FavoritesComponent } from "./favorites/favorites.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AkitaNgDevtools } from "@datorama/akita-ngdevtools";
@@ -29,6 +29,8 @@ import {
 	MatAutocompleteModule
 } from "@angular/material";
 import { AuthInterceptor } from "./auth/auth-interceptor";
+import { WeatherDashboardComponent } from "./weather-dashboard/weather-dashboard.component";
+import { WeatherSearchComponent } from "./weather-dashboard/weather-search/weather-search.component";
 
 @NgModule({
 	declarations: [
@@ -37,7 +39,9 @@ import { AuthInterceptor } from "./auth/auth-interceptor";
 		WeatherInfoComponent,
 		FavoritesComponent,
 		LoginComponent,
-		SigupComponent
+		SigupComponent,
+		WeatherDashboardComponent,
+		WeatherSearchComponent
 	],
 	imports: [
 		BrowserModule,

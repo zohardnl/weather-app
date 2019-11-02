@@ -7,7 +7,10 @@ const userRoutes = require("./routes/user");
 const app = express();
 
 mongoose
-	.connect("mongodb+srv://daniel:3d3YnrtMfkzHRajh@danieldb-zfafp.mongodb.net/weather")
+	.connect("mongodb+srv://daniel:3d3YnrtMfkzHRajh@danieldb-zfafp.mongodb.net/weather", {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
 	.then(() => {
 		console.log("Connected to database!");
 	})

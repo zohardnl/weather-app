@@ -5,6 +5,7 @@ import { AuthData } from "./auth-data.model";
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
+import { WeatherService } from "../state";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
@@ -13,7 +14,11 @@ export class AuthService {
 	private tokenTimer: any;
 	private authStatusListener = new Subject<boolean>();
 
-	constructor(private http: HttpClient, private router: Router) {}
+	constructor(
+		private http: HttpClient,
+		private router: Router,
+		private weatherService: WeatherService
+	) {}
 
 	getToken() {
 		return this.token;
@@ -44,6 +49,7 @@ export class AuthService {
 					this.setAuthTimer(expiresInDuration);
 					this.isAuthenticated = true;
 					this.authStatusListener.next(true);
+					this.weatherService.setValidToSearch(true);
 					const now = new Date();
 					const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
 					this.saveAuthData(token, expirationDate);
@@ -62,6 +68,7 @@ export class AuthService {
 		if (expiresIn > 0) {
 			this.token = authInformation.token;
 			this.isAuthenticated = true;
+			this.weatherService.setValidToSearch(true);
 			this.setAuthTimer(expiresIn / 1000);
 			this.authStatusListener.next(true);
 		}
@@ -73,6 +80,7 @@ export class AuthService {
 		this.authStatusListener.next(false);
 		clearTimeout(this.tokenTimer);
 		this.clearAuthData();
+		this.weatherService.setValidToSearch(false);
 		this.router.navigate(["login"]);
 	}
 
@@ -95,6 +103,7 @@ export class AuthService {
 	private getAuthData() {
 		const token = localStorage.getItem("token");
 		const expirationDate = localStorage.getItem("expiration");
+
 		if (!token || !expirationDate) {
 			return;
 		}

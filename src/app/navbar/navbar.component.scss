@@ -1,85 +1,13 @@
 @import "../../shared/mixins";
 @import "../../shared/vars";
 
-:host::ng-deep.weather-header {
+.weather-header {
 	@include mobile {
 		padding: 2em 2em 0;
 	}
 
-	padding: 2em 0;
+	padding: 2em 0 0;
 	flex-wrap: wrap;
-
-	&__auto-complete {
-		width: 30em;
-
-		.mat-form-field {
-			width: 100%;
-			color: $main-color;
-
-			&-outline {
-				color: $main-color;
-			}
-
-			mat-label {
-				color: $main-color;
-			}
-
-			input {
-				&::placeholder {
-					color: $main-color;
-				}
-			}
-		}
-	}
-
-	&__item {
-		&:first-child {
-			@include mobile {
-				width: 100%;
-				margin-bottom: 2em;
-			}
-			width: 30em;
-		}
-	}
-
-	&__search {
-		@include mobile {
-			padding: 0.7em;
-		}
-
-		background: #7aafd9;
-		padding: 1em;
-		border: 2px solid #5399e6;
-		border-radius: 2em;
-
-		input {
-			background: transparent;
-			border: none;
-			font-size: 1rem;
-			font-weight: bold;
-			margin-left: 4em;
-
-			&::placeholder {
-				color: #0d1e57;
-				font-size: 1rem;
-				font-weight: bold;
-			}
-		}
-	}
-
-	&__navigate {
-		@include tablet {
-			width: 100%;
-		}
-
-		@include mobile {
-			width: 100%;
-		}
-
-		button {
-			min-width: 10em;
-		}
-	}
 
 	&__sub {
 		width: 100%;

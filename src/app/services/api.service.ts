@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { catchError, map, tap } from "rxjs/operators";
-import { BehaviorSubject, Observable, of, Subject } from "rxjs";
+import { of, Subject } from "rxjs";
 import { ModalService } from "./modal.service";
 import { environment } from "../../environments/environment";
 import { autoComplete, Weather, WeatherService } from "../state";
@@ -13,7 +13,6 @@ export class ApiService {
 	filterdWeather: Weather[] = [];
 	favoriteWeather: Weather[] = [];
 	acArr: autoComplete[];
-	private autoComplete = new BehaviorSubject<autoComplete[]>([]);
 	private favWeather = new Subject<Weather[]>();
 
 	constructor(
@@ -23,11 +22,31 @@ export class ApiService {
 	) {}
 
 	getWeatherHttpByKey(val: number) {
-		return this.http.get(`${environment.apiDaily}/${val}?apikey=${environment.apiKey}`);
+		return this.http.get<any>(`${environment.apiDaily}/${val}?apikey=${environment.apiKey}`);
 	}
 
-	getWeatherByKey(val: number) {
-		return this.getWeatherHttpByKey(val).pipe(map(res => console.log(res)));
+	getWeatherByKey(val: number, city: string) {
+		return this.getWeatherHttpByKey(val).pipe(
+			map(res => {
+				return {
+					name: city,
+					day: "Now",
+					key: val,
+					image: res[0].WeatherIcon,
+					temp: res[0].Temperature.Metric.Value,
+					status: res[0].WeatherText
+				} as Weather;
+			}),
+			tap(res => {
+				this.weather.updateCurrent(res);
+			}),
+			catchError(() =>
+				of(
+					this.modal.openModal("No Results for this search!", "Search"),
+					this.weather.updateCurrent(null)
+				)
+			)
+		);
 	}
 
 	getForecastHttp(value: number) {
@@ -50,7 +69,13 @@ export class ApiService {
 					});
 					this.weather.updateWeather(this.filterdWeather);
 				}
-			})
+			}),
+			catchError(() =>
+				of(
+					this.modal.openModal("No Results for this search!", "Search"),
+					this.weather.updateWeather([])
+				)
+			)
 		);
 	}
 
@@ -72,24 +97,21 @@ export class ApiService {
 						} as autoComplete;
 					});
 				}
-				this.autoComplete.next(this.acArr);
+				this.weather.updateAutoComplete(this.acArr);
 			}),
 			catchError(() =>
 				of(
 					this.modal.openModal("No Results for this search!", "Search"),
-					this.autoComplete.next([])
+					this.weather.updateAutoComplete([])
 				)
 			)
 		);
 	}
 
-	getAutoComplete() {
-		return this.autoComplete.asObservable();
-	}
-
 	updateDbFav(item: Weather) {
 		const weatherItem: Weather = {
-			name: "ashdod",
+			name: item.name,
+			key: item.key,
 			day: item.day,
 			image: item.image,
 			temp: item.temp,
@@ -111,6 +133,7 @@ export class ApiService {
 					return weatherData.weather.map(item => {
 						return {
 							backId: item._id,
+							key: item.key,
 							name: item.name,
 							day: item.day,
 							image: item.image,

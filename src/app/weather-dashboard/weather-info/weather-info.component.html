@@ -1,0 +1,48 @@
+<div class="weather-info__main">
+	<div
+		fxLayout="row"
+		fxLayoutAlign="center center"
+		class="weather-info__current"
+		*ngIf="currentWeather && weatherList.length > 0"
+	>
+		<div
+			class="weather-info__current__item animated zoomIn slow"
+			fxLayout="column"
+			fxLayoutAlign="space-around center"
+		>
+			<span>{{ currentWeather.name | titlecase }}</span>
+			<span>{{ currentWeather.day }}</span>
+			<span><img [src]="getImage(currentWeather.image)" alt="weather-image"/></span>
+			<span>{{ currentWeather.temp | number: "1.0-0" }}°</span>
+			<span>{{ currentWeather.status }}</span>
+			<button
+				(click)="addToFavorite(currentWeather)"
+				mat-raised-button
+				class="weather-info__current__item__save"
+			>
+				Save
+			</button>
+		</div>
+	</div>
+
+	<div
+		class="weather-info animated bounceInLeft slow"
+		fxLayout="row"
+		fxLayoutAlign="space-around center"
+		fxLayout.xs="column"
+		fxLayout.sm="column"
+		*ngIf="weatherList.length > 0"
+	>
+		<div
+			class="weather-info__item"
+			*ngFor="let item of weatherList; let i = index"
+			fxLayout="column"
+			fxLayoutAlign="space-around center"
+		>
+			<span>{{ getDay(item.day) }}</span>
+			<span><img [src]="getImage(item.image)" alt="weather-image"/></span>
+			<span>{{ item.temp | number: "1.0-0" }}°</span>
+			<span>{{ item.status }}</span>
+		</div>
+	</div>
+</div>

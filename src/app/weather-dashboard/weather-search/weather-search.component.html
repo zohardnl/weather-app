@@ -1,0 +1,28 @@
+<div class="weather-header" fxLayout="row" fxLayoutAlign="center center" *ngIf="searchValid">
+	<div class="weather-header__auto-complete">
+		<mat-form-field appearance="outline" color="primary">
+			<mat-label>Search Weather</mat-label>
+			<input
+				type="search"
+				placeholder="Example: Tel-Aviv"
+				pattern="^[\S][^\u0590-\u05FF]+$"
+				ngModel
+				#search="ngModel"
+				matInput
+				[matAutocomplete]="auto"
+			/>
+			<button mat-button *ngIf="search.value" matSuffix mat-icon-button (click)="clearValue()">
+				<mat-icon>close</mat-icon>
+			</button>
+			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+				<mat-option
+					*ngFor="let option of filteredOptions"
+					[value]="option.city"
+					(click)="getSearch(option.key, option.city)"
+				>
+					{{ option.city }} , {{ option.country }}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+	</div>
+</div>

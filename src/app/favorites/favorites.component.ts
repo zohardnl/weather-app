@@ -26,8 +26,9 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	sendToInfo(value: number) {
+	sendToInfo(value: number, city?: string) {
 		this.api.getForecast(value).subscribe();
+		this.api.getWeatherByKey(value, city).subscribe();
 		this.router.navigate(["weather"]);
 	}
 

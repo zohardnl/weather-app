@@ -1,4 +1,5 @@
-<div class="favorite-info__wrapper" fxLayout="column" fxLayoutAlign="space-between center">
+<app-weather-search></app-weather-search>
+<div class="favorite-info__wrapper" fxLayout="column" fxLayoutAlign="stretch center">
 	<h1 class="favorite-info__main-title animated fadeInDown">
 		Favorite Locations
 	</h1>
@@ -29,7 +30,7 @@
 				<div class="back-info">
 					<button
 						class="favorite-info__item__info"
-						(click)="sendToInfo(item.key)"
+						(click)="sendToInfo(item.key, item.name)"
 						mat-stroked-button
 					>
 						Info

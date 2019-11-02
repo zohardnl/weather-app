@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("", checkAuth, (req, res, next) => {
 	const weather = new Weather({
 		name: req.body.name,
+		key: req.body.key,
 		day: req.body.day,
 		image: req.body.image,
 		temp: req.body.temp,

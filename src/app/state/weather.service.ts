@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { WeatherStore, WeatherState } from "./weather.store";
 import { NgEntityService } from "@datorama/akita-ng-entity-service";
 import { WeatherQuery } from "./weather.query";
-import { Weather } from "./weather.model";
+import { autoComplete, Weather } from "./weather.model";
 import { guid } from "@datorama/akita";
 import { Observable } from "rxjs";
 
@@ -19,15 +19,39 @@ export class WeatherService extends NgEntityService<WeatherState> {
 		this.store.set(data);
 	}
 
+	updateCurrent(item: Weather) {
+		this.store.update({ currentWeather: item });
+	}
+
+	updateAutoComplete(arr: autoComplete[]) {
+		this.store.update({ autoComplete: arr });
+	}
+
 	setLoading(loader: boolean) {
 		this.store.update({ isLoading: loader });
+	}
+
+	setValidToSearch(val: boolean) {
+		this.store.update({ searchValid: val });
 	}
 
 	getWeatherList(): Observable<Weather[]> {
 		return this.query.weatherList$;
 	}
 
-	getLoading() {
+	getAutoComplete(): Observable<autoComplete[]> {
+		return this.query.autoComplete$;
+	}
+
+	getCurrentWeather(): Observable<Weather> {
+		return this.query.currentWeather$;
+	}
+
+	getLoading(): Observable<boolean> {
 		return this.query.isLoading$;
+	}
+
+	getValidSearch() {
+		return this.query.validSearch$;
 	}
 }
