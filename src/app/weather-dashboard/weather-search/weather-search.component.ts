@@ -16,6 +16,7 @@ export class WeatherSearchComponent implements OnInit, AfterViewInit, OnDestroy 
 	searchValid: boolean;
 	filteredOptions: autoComplete[] = [];
 	private searchValidSub: Subscription;
+	private autoCompleteSub: Subscription;
 
 	constructor(private weather: WeatherService, private route: Router, private api: ApiService) {
 		this.searchValidSub = this.weather.getValidSearch().subscribe(res => {
@@ -24,7 +25,7 @@ export class WeatherSearchComponent implements OnInit, AfterViewInit, OnDestroy 
 	}
 
 	ngOnInit() {
-		this.weather.getAutoComplete().subscribe(res => {
+		this.autoCompleteSub = this.weather.getAutoComplete().subscribe(res => {
 			this.filteredOptions = res;
 		});
 	}
@@ -41,8 +42,6 @@ export class WeatherSearchComponent implements OnInit, AfterViewInit, OnDestroy 
 			.pipe(
 				filter(value => (value !== null && value.length === 0) || this.weatherSearch.invalid),
 				tap(() => {
-					this.weather.updateWeather([]);
-					this.weather.updateAutoComplete([]);
 					this.weather.setLoading(false);
 				})
 			)
@@ -66,6 +65,7 @@ export class WeatherSearchComponent implements OnInit, AfterViewInit, OnDestroy 
 	}
 
 	getSearch(key: number, city: string) {
+		this.weather.setLoading(false);
 		this.api.getForecast(key).subscribe();
 		this.api.getWeatherByKey(key, city).subscribe();
 	}
@@ -73,9 +73,12 @@ export class WeatherSearchComponent implements OnInit, AfterViewInit, OnDestroy 
 	clearValue() {
 		this.weatherSearch.reset("");
 		this.weather.updateWeather([]);
+		this.weather.updateAutoComplete([]);
+		this.weather.updateCurrent(null);
 	}
 
 	ngOnDestroy() {
 		this.searchValidSub.unsubscribe();
+		this.autoCompleteSub.unsubscribe();
 	}
 }

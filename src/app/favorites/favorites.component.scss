@@ -5,6 +5,7 @@
 	flex-wrap: wrap;
 	color: $main-color;
 	padding: 0 1em;
+	margin-top: 3em;
 	width: 100%;
 
 	&__item {
@@ -94,11 +95,14 @@
 	}
 
 	&__main-title {
+		@include mobile {
+			font-size: 2em;
+		}
+
 		color: $main-color;
 		font-family: cursive;
-		padding: 20px;
-		margin: 0 0 20px;
 		text-align: center;
+		font-size: 4em;
 	}
 
 	&__subtitle {
