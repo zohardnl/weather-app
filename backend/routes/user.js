@@ -14,10 +14,9 @@ router.post("/signup", (req, res, next) => {
 		});
 		user
 			.save()
-			.then(result => {
+			.then(() => {
 				res.status(201).json({
-					message: "User created!",
-					result: result
+					created: true
 				});
 			})
 			.catch(err => {
@@ -34,7 +33,7 @@ router.post("/login", (req, res, next) => {
 		.then(user => {
 			if (!user) {
 				return res.status(401).json({
-					message: "Auth failed"
+					login: false
 				});
 			}
 			fetchedUser = user;
@@ -43,7 +42,7 @@ router.post("/login", (req, res, next) => {
 		.then(result => {
 			if (!result) {
 				return res.status(401).json({
-					message: "Auth failed"
+					login: false
 				});
 			}
 			const token = jwt.sign(
@@ -58,7 +57,7 @@ router.post("/login", (req, res, next) => {
 		})
 		.catch(err => {
 			return res.status(401).json({
-				message: "Auth failed"
+				login: false
 			});
 		});
 });

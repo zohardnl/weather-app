@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { catchError, map, tap } from "rxjs/operators";
-import { of, Subject } from "rxjs";
+import { map, tap } from "rxjs/operators";
+import { Subject } from "rxjs";
 import { ModalService } from "./modal.service";
 import { environment } from "../../environments/environment";
 import { autoComplete, Weather, WeatherService } from "../state";

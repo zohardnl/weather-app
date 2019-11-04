@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 	styleUrls: ["./sigup.component.scss"]
 })
 export class SigupComponent implements OnInit {
-	constructor(public authService: AuthService, private router: Router) {}
+	constructor(private authService: AuthService, private router: Router) {}
 
 	ngOnInit() {}
 

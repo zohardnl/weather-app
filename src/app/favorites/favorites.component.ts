@@ -13,15 +13,16 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 	favoriteList: Weather[] = [];
 	isLoading: boolean;
 	private weatherSub: Subscription;
+	private isLoadingSub: Subscription;
 
-	constructor(private api: ApiService, public weather: WeatherService, private router: Router) {}
+	constructor(private api: ApiService, private weather: WeatherService, private router: Router) {}
 
 	ngOnInit() {
 		this.api.getWeather();
 		this.weatherSub = this.api.getFavWeatherListener().subscribe(res => {
 			this.favoriteList = res;
 		});
-		this.weather.getLoading().subscribe(load => {
+		this.isLoadingSub = this.weather.getLoading().subscribe(load => {
 			this.isLoading = load;
 		});
 	}
@@ -38,5 +39,6 @@ export class FavoritesComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.weatherSub.unsubscribe();
+		this.isLoadingSub.unsubscribe();
 	}
 }

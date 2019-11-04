@@ -13,6 +13,8 @@ export class AuthService {
 	private token: string;
 	private tokenTimer: any;
 	private authStatusListener = new Subject<boolean>();
+	private isNewMemberListener = new Subject<boolean>();
+	private isLoginListener = new Subject<boolean>();
 
 	constructor(
 		private http: HttpClient,
@@ -32,30 +34,51 @@ export class AuthService {
 		return this.authStatusListener.asObservable();
 	}
 
+	getIsMemberListener() {
+		return this.isNewMemberListener.asObservable();
+	}
+
+	getIsLoginListener() {
+		return this.isLoginListener.asObservable();
+	}
+
 	createUser(email: string, password: string) {
 		const authData: AuthData = { email: email, password: password };
-		this.http.post(`${environment.userUrl}/signup`, authData).subscribe();
+		this.http.post<any>(`${environment.userUrl}/signup`, authData).subscribe(
+			result => {
+				if (result.created) this.isNewMemberListener.next(true);
+			},
+			() => {
+				this.isNewMemberListener.next(false);
+			}
+		);
 	}
 
 	login(email: string, password: string) {
 		const authData: AuthData = { email: email, password: password };
 		this.http
 			.post<{ token: string; expiresIn: number }>(`${environment.userUrl}/login`, authData)
-			.subscribe(response => {
-				const token = response.token;
-				this.token = token;
-				if (token) {
-					const expiresInDuration = response.expiresIn;
-					this.setAuthTimer(expiresInDuration);
-					this.isAuthenticated = true;
-					this.authStatusListener.next(true);
-					this.weatherService.setValidToSearch(true);
-					const now = new Date();
-					const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-					this.saveAuthData(token, expirationDate);
-					this.router.navigate(["weather"]);
+			.subscribe(
+				response => {
+					const token = response.token;
+					this.token = token;
+					if (token) {
+						const expiresInDuration = response.expiresIn;
+						this.setAuthTimer(expiresInDuration);
+						this.isAuthenticated = true;
+						this.authStatusListener.next(true);
+						this.isLoginListener.next(true);
+						this.weatherService.setValidToSearch(true);
+						const now = new Date();
+						const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
+						this.saveAuthData(token, expirationDate);
+						this.router.navigate(["weather"]);
+					}
+				},
+				() => {
+					this.isLoginListener.next(false);
 				}
-			});
+			);
 	}
 
 	autoAuthUser() {
