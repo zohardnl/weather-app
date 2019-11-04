@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSnackBar, MatSnackBarVerticalPosition } from "@angular/material/snack-bar";
 
 @Injectable({
 	providedIn: "root"
@@ -7,10 +7,10 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class ModalService {
 	constructor(private modalSnack: MatSnackBar) {}
 
-	openModal(message: string, action?: string) {
+	openModal(message: string, action?: string, position: MatSnackBarVerticalPosition = "bottom") {
 		this.modalSnack.open(message, action, {
 			duration: 3000,
-			verticalPosition: "bottom"
+			verticalPosition: position
 		});
 	}
 }

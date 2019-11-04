@@ -1,14 +1,3 @@
-<div
-	*ngIf="!notNewMember || !notLogin || !notMember"
-	class="login__error"
-	fxLayoutAlign="center center"
-	fxLayout="column"
->
-	<mat-card [ngClass]="!notLogin || !notMember ? 'alert' : !notNewMember ? 'success' : ''">
-		{{ message }}
-	</mat-card>
-</div>
-
 <div class="login-wrapper" fxLayoutAlign="center center" fxLayout="column">
 	<mat-card class="login">
 		<h2>Login</h2>

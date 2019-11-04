@@ -24,36 +24,4 @@
 		}
 		height: calc(100% - 110px);
 	}
-
-	&__error {
-		@include mobile {
-			top: 27%;
-		}
-
-		position: absolute;
-		top: 20%;
-		width: 100%;
-
-		mat-card {
-			@include mobile {
-				width: 80%;
-			}
-
-			width: 60%;
-			text-align: center;
-		}
-
-		.alert {
-			color: $alert;
-		}
-
-		.success {
-			color: $success;
-		}
-
-		.alert,
-		.success {
-			font-size: 18px;
-		}
-	}
 }
