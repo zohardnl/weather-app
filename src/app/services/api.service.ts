@@ -139,7 +139,7 @@ export class ApiService {
 	}
 
 	removeFav(itemId: string) {
-		this.http.delete(`${environment.weatherUrl}/` + itemId).subscribe(() => {
+		this.http.delete<any>(`${environment.weatherUrl}/` + itemId).subscribe(() => {
 			this.favoriteWeather = this.favoriteWeather.filter(val => val.backId !== itemId);
 			this.favWeather.next([...this.favoriteWeather]);
 		});
