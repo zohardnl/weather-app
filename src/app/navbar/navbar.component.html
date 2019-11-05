@@ -34,11 +34,13 @@
 		>
 			Logout
 		</button>
+
 		<mat-slide-toggle
 			color="primary"
-			(click)="changeRoute()"
-			class="weather-header__sub__container__route"
+			(change)="changeRoute()"
 			*ngIf="userIsAuthenticated"
+			class="weather-header__sub__container__route"
+			#slider
 		>
 			Weather / Favorites
 		</mat-slide-toggle>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
 import { WeatherService } from "../state";
@@ -11,6 +11,8 @@ import { AuthService } from "../auth/auth.service";
 	styleUrls: ["./navbar.component.scss"]
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+	@ViewChild("slider", { static: false }) slider: HTMLInputElement;
+
 	userIsAuthenticated: boolean;
 	private authListenerSubs: Subscription;
 
@@ -28,8 +30,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 	ngOnInit() {}
 
 	changeRoute() {
-		if (this.route.url === "/favorites") this.route.navigate(["/weather"]);
-		else this.route.navigate(["/favorites"]);
+		if (this.slider.checked) {
+			this.route.navigate(["/favorites"]);
+		} else {
+			this.route.navigate(["/weather"]);
+		}
 	}
 
 	onLogout() {
