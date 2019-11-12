@@ -35,6 +35,10 @@ export class WeatherService extends NgEntityService<WeatherState> {
 		this.store.update({ searchValid: val });
 	}
 
+	setSliderStatus(val: boolean) {
+		this.store.update({ sliderChecked: val });
+	}
+
 	getWeatherList(): Observable<Weather[]> {
 		return this.query.weatherList$;
 	}
@@ -53,5 +57,9 @@ export class WeatherService extends NgEntityService<WeatherState> {
 
 	getValidSearch() {
 		return this.query.validSearch$;
+	}
+
+	getSliderStatus() {
+		return this.query.sliderChecked$;
 	}
 }

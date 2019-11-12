@@ -7,13 +7,15 @@ export interface WeatherState extends EntityState<Weather> {
 	searchValid: boolean;
 	currentWeather: Weather;
 	autoComplete: autoComplete[];
+	sliderChecked: boolean;
 }
 
 const initialState = {
 	isLoading: false,
 	searchValid: false,
 	currentWeather: null,
-	autoComplete: []
+	autoComplete: [],
+	sliderChecked: null
 };
 
 @Injectable({ providedIn: "root" })

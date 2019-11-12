@@ -4,7 +4,7 @@
 	fxLayoutAlign="space-between center"
 	class="weather-header__sub"
 >
-	<div class="weather-header__sub__logo" routerLink="weather">
+	<div class="weather-header__sub__logo">
 		<img src="assets/images/logo.png" alt="herolo-logo" class="weather-header__sub__logo--image" />
 	</div>
 
@@ -38,6 +38,7 @@
 		<mat-slide-toggle
 			color="primary"
 			(change)="changeRoute()"
+			[checked]="sliderStatus"
 			*ngIf="userIsAuthenticated"
 			class="weather-header__sub__container__route"
 			#slider

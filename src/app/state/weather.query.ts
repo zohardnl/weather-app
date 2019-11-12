@@ -19,4 +19,6 @@ export class WeatherQuery extends QueryEntity<WeatherState> {
 	autoComplete$: Observable<autoComplete[]> = this.select(store => store.autoComplete);
 
 	validSearch$: Observable<boolean> = this.select(store => store.searchValid);
+
+	sliderChecked$: Observable<boolean> = this.select(store => store.sliderChecked);
 }

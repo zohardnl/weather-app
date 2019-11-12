@@ -64,6 +64,7 @@ export class WeatherInfoComponent implements OnInit, OnDestroy {
 			this.modal.openModal("This location already exist!", "Favorite");
 		} else {
 			this.api.updateDbFav(favorite);
+			this.weather.setSliderStatus(true);
 			this.router.navigate(["favorites"]);
 		}
 	}
