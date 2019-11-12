@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterContentChecked, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ApiService } from "../services/api.service";
 import { Router } from "@angular/router";
 import { WeatherService } from "../state";
@@ -10,7 +10,7 @@ import { AuthService } from "../auth/auth.service";
 	templateUrl: "./navbar.component.html",
 	styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
+export class NavbarComponent implements OnInit, OnDestroy, AfterContentChecked {
 	@ViewChild("slider", { static: false }) slider: HTMLInputElement;
 	sliderStatus: boolean;
 	userIsAuthenticated: boolean;
@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngOnInit() {}
 
-	ngAfterViewInit(): void {
+	ngAfterContentChecked(): void {
 		let url = window.location.pathname;
 		if (url === "/weather") {
 			this.sliderStatus = false;
